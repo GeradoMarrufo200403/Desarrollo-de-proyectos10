@@ -1,5 +1,5 @@
 ### Cabeceras calculadora
-set-cookie: sid=9a694a6ac499a678463f28ffcceee5d9; HttpOnly; Path=/; SameSite=strict
+set-cookie: sid=d707e33739a9267a1292044b7aafe0d4; HttpOnly; Path=/; SameSite=strict
 content-security-policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 x-frame-options: DENY
 x-content-type-options: nosniff
@@ -8,7 +8,7 @@ permissions-policy: camera=(), microphone=(), geolocation=()
 cross-origin-resource-policy: same-origin
 cache-control: no-store
 ### Cabeceras visor /view
-content-security-policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self'; img-src 'self' data:; connect-src 'self' ws://localhost:8000 wss://localhost:8000; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' ws://localhost:8000 wss://localhost:8000; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 x-frame-options: DENY
 x-content-type-options: nosniff
 referrer-policy: no-referrer
@@ -17,9 +17,9 @@ cache-control: no-store
 HTTP/1.1 200 OK
 (sin cabeceras access-control = el navegador bloquea la lectura)
 ### 2. Matrices privadas por sesion
-{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":13}
+{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}
 sesion A:
-[{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":13}]
+[{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}]
 atacante (otra sesion):
 []
 ### 3. NaN / overflow
@@ -33,6 +33,3 @@ det 400x400 -> 422
 {"status":"online","message":"API de Modelo 3D activa (las matrices las calcula calculadora_matrices)","endpoints":{"figuras":"/api/figuras","figura":"/api/figura/{nombre}","csv_model":"/api/modelo-csv","websocket":"/ws/transform","viewer":"/view"}}
 /docs visor 404
 /openapi.json calc 404
-curl: (2) no URL specified
-curl: try 'curl --help' or 'curl --manual' for more information
-{"detail":"figura desconocida. Opciones: esfera, cubo, toroide"}

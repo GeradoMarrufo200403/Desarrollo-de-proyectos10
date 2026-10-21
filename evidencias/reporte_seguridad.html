@@ -1,181 +1,137 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><title>Reporte de seguridad</title><style>
-@page { size: A4; margin: 14mm 13mm; }
-body { font: 8.6pt/1.35 -apple-system, Helvetica, Arial, sans-serif; color: #111; }
-h1 { font-size: 17pt; margin: 0 0 2px; } h2 { font-size: 11.5pt; margin: 11px 0 4px; border-bottom: 1.5px solid #333; }
-h3 { font-size: 9.6pt; margin: 8px 0 2px; } p { margin: 3px 0; } code { font-size: 8pt; background: #eee; padding: 0 2px; }
-table { border-collapse: collapse; width: 100%; font-size: 7.6pt; } th, td { border: 1px solid #999; padding: 2px 4px; vertical-align: top; }
-th { background: #ddd; } .r { background: #fbd5d5; } .f { background: #d9ecff; } .m { background: #ffe9b8; }
-pre { background: #f4f4f4; border: 1px solid #ccc; padding: 3px 5px; font-size: 6.6pt; line-height: 1.25; white-space: pre-wrap; word-break: break-all; margin: 3px 0; }
-figure { margin: 4px 0; text-align: center; } figcaption { font-size: 7.4pt; color: #444; } img { border: 1px solid #aaa; }
-.falta { border: 2px dashed #c00; padding: 8px; margin: 5px 0; font-size: 8pt; color: #900; background: #fff6f6; }
-.cols { display: flex; gap: 8px; } .cols > * { flex: 1; min-width: 0; } .pb { page-break-before: always; }
-ul { margin: 2px 0 2px 16px; padding: 0; } li { margin: 1px 0; }
+:root { --ink:#16202a; --mute:#5b6773; --line:#d8dee4; --red:#c0392b; --amber:#b7791f; --blue:#2b6cb0; --green:#2f855a; }
+@page { size: A4; margin: 15mm 14mm; }
+* { box-sizing: border-box; }
+body { font: 9pt/1.45 -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+h1 { font-size: 20pt; margin: 0; letter-spacing: -.3px; }
+.sub { color: var(--mute); margin: 2px 0 10px; }
+h2 { font-size: 12.5pt; margin: 16px 0 6px; padding-left: 8px; border-left: 4px solid var(--blue); break-after: avoid; }
+h3 { font-size: 9.6pt; margin: 11px 0 3px; color: var(--blue); break-after: avoid; }
+p { margin: 3px 0; } code { font: 7.8pt Menlo, monospace; background: #eef1f4; padding: 0 3px; border-radius: 3px; }
+.kpis { display: flex; gap: 8px; margin: 8px 0 4px; }
+.kpi { flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.kpi b { display: block; font-size: 15pt; line-height: 1.1; } .kpi span { color: var(--mute); font-size: 7.6pt; }
+table { border-collapse: collapse; width: 100%; font-size: 7.9pt; }
+th { text-align: left; background: #f1f4f7; font-weight: 600; } th, td { border-bottom: 1px solid var(--line); padding: 4px 5px; vertical-align: top; }
+tr { break-inside: avoid; }
+.tag { display: inline-block; font-size: 7pt; font-weight: 700; padding: 0 5px; border-radius: 9px; color: #fff; white-space: nowrap; }
+.alto { background: var(--red); } .medio { background: var(--amber); } .bajo { background: var(--blue); } .info { background: #718096; }
+.ok { color: var(--green); font-weight: 600; } .fp { color: var(--blue); font-weight: 600; } .re { color: var(--red); font-weight: 600; }
+figure { margin: 5px 0; break-inside: avoid; } figcaption { font-size: 7.5pt; color: var(--mute); margin-top: 2px; }
+img { width: 100%; border: 1px solid var(--line); border-radius: 4px; display: block; }
+.crop img { aspect-ratio: 4.4 / 1; object-fit: cover; object-position: 0 100%; }
+.cols { display: flex; gap: 8px; align-items: flex-start; } .cols > * { flex: 1; min-width: 0; }
+pre { background: #f6f8fa; border: 1px solid var(--line); border-radius: 4px; padding: 5px 7px; font: 6.9pt/1.35 Menlo, monospace; white-space: pre-wrap; word-break: break-all; margin: 4px 0; }
+ul, ol { margin: 3px 0 3px 16px; padding: 0; } li { margin: 2px 0; }
+.nota { background: #f6f8fa; border-left: 3px solid var(--line); padding: 4px 8px; margin: 6px 0; color: #34404c; }
+.pb { break-before: page; }
 </style></head><body>
 
 <h1>Seguridad de la calculadora de matrices y el visor 3D</h1>
-<p><b>Autora:</b> Gianina Casanova · <b>Repositorio:</b> <a href="https://github.com/Ninacruz25/calculadora">github.com/Ninacruz25/calculadora</a> · <b>Rama:</b> <code>seguridad/zap-burp-mitigaciones</code> · <b>Pull Request:</b> PR_URL<br>
-Herramientas: OWASP ZAP 2.17 (escaneo automático, política <i>Dev Standard</i>, spider tradicional + cliente), Burp Suite, revisión de código y pruebas manuales. Solo se escanearon las apps propias en entorno local (<code>host.docker.internal:8001</code> y <code>:8000</code>).</p>
+<p class="sub">Gianina Casanova · <a href="https://github.com/Ninacruz25/calculadora">github.com/Ninacruz25/calculadora</a> · rama <code>seguridad/zap-burp-mitigaciones</code><br>
+OWASP ZAP 2.17 (Automated Scan, <i>Dev Standard</i>), Burp Suite y revisión manual. Solo apps propias en entorno local.</p>
 
-<h2>1. Tabla comparativa de hallazgos</h2>
-<table><tr><th>#</th><th>Alerta / hallazgo</th><th>Riesgo</th><th>¿Real o falso positivo?</th><th>Mitigación aplicada</th><th>Estado final</th></tr>
-<tr class="r"><td>M1</td><td><b>Sin control de acceso</b>: <code>GET /matrices</code> lista las matrices de <i>todos</i>; IDs secuenciales (IDOR) <i>(manual)</i></td><td>Alto</td><td>Real. Probado: una sesión sin cookie lee la matriz <code>cuenta_secreta</code> de otra.</td><td>Matrices atadas a una sesión opaca (cookie <code>sid</code> HttpOnly + SameSite=Strict); ajena = 404.</td><td>Corregido (test)</td></tr>
-<tr class="r"><td>M2</td><td><b>Cross-Site WebSocket Hijacking</b>: <code>/ws/transform</code> acepta cualquier <code>Origin</code> <i>(manual)</i></td><td>Alto</td><td>Real. Una web en otro origen abrió el WS del visor desde Chrome.</td><td>Allowlist de <code>Origin</code> en el handshake (403); máx. 20 conexiones y 200 msg/s.</td><td>Corregido (test)</td></tr>
-<tr class="r"><td>M3</td><td><b>CORS reflejado + credenciales</b> en el visor (<code>allow_origins=*</code>, <code>allow_credentials=True</code>) <i>(manual)</i></td><td>Medio-Alto</td><td>Real. El servidor devolvió <code>ACAO: http://evil.example</code> y <code>ACAC: true</code>. ZAP no lo ve: no envía <code>Origin</code>.</td><td>Allowlist (<code>localhost:8000</code>), sin credenciales, solo GET.</td><td>Corregido (test)</td></tr>
-<tr class="r"><td>M4</td><td><b>Entradas sin límite</b> (DoS): matrices de cualquier tamaño, cadenas ilimitadas, almacenamiento sin tope <i>(manual)</i></td><td>Medio</td><td>Real. Det. 400×400 aceptado; ×300 tarda 0,9 s y crece n³.</td><td>≤50×50, ≤10 matrices, |x|≤1e12, nombre ≤60, ≤100 matrices/sesión, WS ≤1 KB.</td><td>Corregido (test)</td></tr>
-<tr class="r"><td>M5</td><td><b>Robustez/integridad</b>: <code>NaN</code>/overflow → 500; <code>{"rx":"abc"}</code> o <code>[1,2,3]</code> tumba el WS; matriz irregular suma en silencio con resultado incorrecto <i>(manual)</i></td><td>Medio-Bajo</td><td>Real. Reproducido los tres casos.</td><td>Validación Pydantic (rectangular, finita); handler 422 sin eco de <code>input</code>; el WS responde <code>error</code> y sigue vivo.</td><td>Corregido (test)</td></tr>
-<tr class="r"><td>M6</td><td><b>Superficie expuesta</b>: <code>/docs</code>, <code>/openapi.json</code>, URL interna en <code>/</code>, puertos en 0.0.0.0, contenedor root, dependencias sin fijar <i>(manual)</i></td><td>Bajo</td><td>Real.</td><td><code>ENABLE_DOCS=1</code> para activarlos; puertos <code>127.0.0.1</code>; usuario no root, <code>cap_drop</code>; versiones fijas.</td><td>Corregido</td></tr>
-<tr class="r"><td>Z1</td><td>Content Security Policy (CSP) Header Not Set (2 + 2)</td><td>Medio</td><td>Real (defensa en profundidad: sin CSP, un XSS futuro ejecuta todo).</td><td>CSP por middleware. JS/CSS movidos a <code>/static</code>; <code>onclick=</code> reemplazado por <code>data-action</code>.</td><td>Corregido. Puede quedar “style-src unsafe-inline” en la calculadora (ver abajo)</td></tr>
-<tr class="r"><td>Z2</td><td>Missing Anti-clickjacking Header (2 + 2)</td><td>Medio</td><td>Real (la UI podía enmarcarse en otra web).</td><td><code>X-Frame-Options: DENY</code> + <code>frame-ancestors 'none'</code>.</td><td>Corregido</td></tr>
-<tr class="r"><td>Z3</td><td>Sub Resource Integrity Attribute Missing (2 + 2)</td><td>Medio</td><td>Real: recursos de terceros (Google Fonts en la calculadora, three.js de cdnjs en el visor) ejecutados/aplicados sin verificar.</td><td>Se eliminaron los terceros: fuentes del sistema y <code>three.min.js</code> servido local (mismo hash SHA-384 que cdnjs).</td><td>Corregido</td></tr>
-<tr class="r"><td>Z4</td><td>X-Content-Type-Options Header Missing (4 + 5)</td><td>Bajo</td><td>Real (MIME sniffing).</td><td><code>X-Content-Type-Options: nosniff</code>.</td><td>Corregido</td></tr>
-<tr class="f"><td>Z5</td><td>Cross-Domain Misconfiguration (4 + 4)</td><td>Medio</td><td><b>Falso positivo respecto a nuestro código</b>: la calculadora no tiene CORS; las ocurrencias corresponden a URLs de terceros (Google Fonts en la calculadora, cdnjs en el visor; <code>ACAO: *</code> por diseño en recursos públicos; se confirma en Alerts → URLs de la alerta). El CORS inseguro <i>real</i> del visor es M3, que ZAP no detectó.</td><td>Al quitar los terceros desaparece la causa; M3 se corrige aparte.</td><td>Debería desaparecer</td></tr>
-<tr class="f"><td>Z6</td><td>Strict-Transport-Security Header Not Set (3 + 3)</td><td>Bajo</td><td><b>Falso positivo en este entorno</b>: HSTS solo lo respetan los navegadores sobre HTTPS; el laboratorio es <code>http://localhost</code>. Sería real en producción.</td><td>Soporte listo: <code>ENABLE_HSTS=1</code> detrás de TLS. No se activa en HTTP (el navegador lo ignora).</td><td>Sigue apareciendo (esperado)</td></tr>
-<tr class="f"><td>Z7</td><td>Modern Web Application (2 + 2)</td><td>Info</td><td>Falso positivo: aviso para el spider (la app usa JS), no es una debilidad.</td><td>—</td><td>Sigue apareciendo (esperado)</td></tr>
-<tr class="f"><td>Z8</td><td>Retrieved from Cache (Systemic)</td><td>Info</td><td>Falso positivo para estos datos: corresponde a recursos públicos de terceros (fuentes/CDN), no a datos de la app. Con datos sensibles sí importaría (ver §4).</td><td><code>Cache-Control: no-store</code> en las dos apps.</td><td>Debería desaparecer</td></tr>
+<div class="kpis">
+<div class="kpi"><b>8 → 3</b><span>alertas de ZAP en la calculadora (4 medias → 1 media)</span></div>
+<div class="kpi"><b>6</b><span>hallazgos reales que ZAP y Burp no reportaron</span></div>
+<div class="kpi"><b>14 / 15</b><span>pruebas de seguridad que fallan en la versión vulnerable</span></div>
+<div class="kpi"><b>23 / 23</b><span>pruebas e2e que pasan tras las correcciones</span></div>
+</div>
+
+<h2>1. Hallazgos</h2>
+
+<table><tr><th>Hallazgo</th><th>Riesgo</th><th>¿Real o falso positivo?</th><th>Mitigación</th><th>Estado final</th></tr>
+<tr><td colspan="5" style="background:#fafbfc"><b>Encontrados a mano</b> (ni ZAP ni Burp los reportaron)</td></tr>
+<tr><td><b>M1</b> <code>GET /matrices</code> lista las matrices de todos; IDs secuenciales</td><td><span class="tag alto">Alto</span></td><td class="re">Real. Burp (captura 3) muestra datos de otros sin autenticarse.</td><td>Matrices privadas por sesión (cookie <code>sid</code> HttpOnly, SameSite=Strict); la ajena responde 404.</td><td class="ok">Corregido</td></tr>
+<tr><td><b>M2</b> WebSocket del visor acepta cualquier <code>Origin</code> (CSWSH)</td><td><span class="tag alto">Alto</span></td><td class="re">Real. Una web en otro puerto lo abrió desde Chrome.</td><td>Lista de orígenes permitidos; el handshake devuelve 403. Máx. 20 conexiones y 200 msg/s.</td><td class="ok">Corregido</td></tr>
+<tr><td><b>M3</b> CORS reflejado con credenciales en el visor</td><td><span class="tag medio">Medio</span></td><td class="re">Real: devolvía <code>ACAO: http://evil.example</code> + <code>ACAC: true</code>. ZAP no envía <code>Origin</code>.</td><td>Lista blanca, sin credenciales, solo GET.</td><td class="ok">Corregido</td></tr>
+<tr><td><b>M4</b> Entradas sin límite (matrices 400×400, cadenas, almacenamiento)</td><td><span class="tag medio">Medio</span></td><td class="re">Real. ×300 tarda 0,9 s y crece como n³; el escaneo de ZAP llegó a guardar 135+ matrices basura.</td><td>≤50×50, ≤10 matrices por cadena, |x|≤1e12, ≤100 matrices por sesión, mensaje WS ≤1 KB.</td><td class="ok">Corregido</td></tr>
+<tr><td><b>M5</b> <code>NaN</code> → error 500; <code>{"rx":"abc"}</code> cierra el WebSocket; matriz irregular suma sin avisar</td><td><span class="tag medio">Medio</span></td><td class="re">Real; los tres reproducidos.</td><td>Validación Pydantic; error 422 sin devolver la entrada; el WS responde <code>error</code> y sigue abierto.</td><td class="ok">Corregido</td></tr>
+<tr><td><b>M6</b> <code>/docs</code>, URL interna en <code>/</code>, puertos en 0.0.0.0, contenedor root</td><td><span class="tag bajo">Bajo</span></td><td class="re">Real.</td><td>Docs apagados por defecto, puertos en 127.0.0.1, usuario no root, <code>cap_drop</code>, versiones fijas.</td><td class="ok">Corregido</td></tr>
+<tr><td colspan="5" style="background:#fafbfc"><b>Alertas de ZAP</b> (8 por aplicación)</td></tr>
+<tr><td>CSP Header Not Set</td><td><span class="tag medio">Medio</span></td><td class="re">Real (defensa en profundidad).</td><td>CSP con <code>script-src 'self'</code>; JS y CSS movidos a <code>/static</code>.</td><td class="ok">Corregido. Queda <i>style-src unsafe-inline</i> (ver abajo)</td></tr>
+<tr><td>Missing Anti-clickjacking Header</td><td><span class="tag medio">Medio</span></td><td class="re">Real.</td><td><code>X-Frame-Options: DENY</code> y <code>frame-ancestors 'none'</code>.</td><td class="ok">Corregido</td></tr>
+<tr><td>Sub Resource Integrity Missing</td><td><span class="tag medio">Medio</span></td><td class="re">Real: se cargaba código/estilos de terceros sin verificar.</td><td>Sin terceros: fuentes del sistema y <code>three.min.js</code> local.</td><td class="ok">Corregido</td></tr>
+<tr><td>X-Content-Type-Options Missing</td><td><span class="tag bajo">Bajo</span></td><td class="re">Real.</td><td><code>nosniff</code>.</td><td class="ok">Corregido</td></tr>
+<tr><td>Cross-Domain Misconfiguration</td><td><span class="tag medio">Medio</span></td><td class="fp">Falso positivo sobre nuestro código: las URLs de la alerta son <code>fonts.googleapis.com</code> y <code>fonts.gstatic.com</code> (ACAO <code>*</code> en fuentes públicas). El CORS inseguro real es M3.</td><td>Se quitaron las fuentes externas.</td><td class="ok">Desapareció</td></tr>
+<tr><td>Strict-Transport-Security Not Set</td><td><span class="tag bajo">Bajo</span></td><td class="fp">Falso positivo en local: HSTS solo aplica sobre HTTPS y el laboratorio es <code>http://localhost</code>. Sería real en producción.</td><td><code>ENABLE_HSTS=1</code> listo para usar detrás de TLS.</td><td class="ok">Desapareció (ZAP la evalúa en respuestas HTTPS, que eran las de terceros)</td></tr>
+<tr><td>Retrieved from Cache</td><td><span class="tag info">Info</span></td><td class="fp">Falso positivo aquí (recursos públicos de terceros).</td><td><code>Cache-Control: no-store</code>.</td><td class="ok">Desapareció</td></tr>
+<tr><td>Modern Web Application</td><td><span class="tag info">Info</span></td><td class="fp">Falso positivo: solo avisa que la app usa JavaScript.</td><td>—</td><td>Sigue (esperado)</td></tr>
+<tr><td>CSP: style-src unsafe-inline <i>(nueva)</i></td><td><span class="tag medio">Medio</span></td><td class="re">Real, menor: aparece ahora que existe CSP.</td><td>Pendiente: los resultados se pintan con <code>style="…"</code> generado por JS; habría que pasarlos a clases CSS. <code>script-src</code> sí es estricta.</td><td>Sigue (deuda documentada)</td></tr>
+<tr><td>Session Management Response Identified <i>(nueva)</i></td><td><span class="tag info">Info</span></td><td class="fp">Falso positivo: ZAP detecta la cookie <code>sid</code> que añadimos a propósito.</td><td>—</td><td>Sigue (esperado)</td></tr>
 </table>
-<p style="font-size:7.4pt">Los números entre paréntesis son las instancias de cada alerta en la calculadora (puerto 8001) y el visor (puerto 8000) del escaneo inicial. La columna “estado final” de las alertas Z1–Z8 es lo esperado según el diseño de cada corrección; se confirma con el re-escaneo del anexo B. Los hallazgos M1–M6 se verifican con pruebas automáticas, no con ZAP.</p>
 
+<h2>2. Prioridad</h2>
+<p>Criterio: <b>impacto × probabilidad × facilidad de explotación</b>, pensando en que los datos fueran sensibles. Pesa más lo que da acceso a datos ajenos o lo puede disparar otra web sin que la víctima haga algo; las cabeceras pesan menos porque solo ayudan cuando ya existe otro fallo.</p>
+<ol>
+<li><b>M1</b>: un <code>GET</code> sin autenticar expone todo. Impacto máximo, esfuerzo mínimo.</li>
+<li><b>M2 y M3</b>: cualquier web que visite la víctima puede operar el visor.</li>
+<li><b>M4</b>: un solo <code>POST</code> degrada el servicio para todos.</li>
+<li><b>M5</b>: un resultado incorrecto sin error es peor que un error, porque nadie lo nota.</li>
+<li><b>CSP, clickjacking, SRI, nosniff</b>: reducen el daño de otro fallo. SRI sube por riesgo de cadena de suministro.</li>
+<li><b>M6 y HSTS</b>: bajo en local, relevante al desplegar.</li></ol>
 
-<h2>2. Priorización</h2>
-<p><b>Criterio:</b> riesgo = impacto × probabilidad × facilidad de explotación, mirándolo con la pregunta del paso 3: <i>¿qué pasaría si estos números fueran datos sensibles?</i> Un fallo que da acceso a datos ajenos o lo puede disparar una web externa sin que la víctima haga nada pesa más que uno que exige un atacante ya dentro, y los fallos de “defensa en profundidad” (cabeceras) pesan menos porque necesitan otro fallo previo.</p>
-<ol style="margin:2px 0 2px 16px;padding:0">
-<li><b>M1 IDOR</b>: impacto máximo (confidencialidad), explotación trivial (un <code>GET</code>), sin autenticación.</li>
-<li><b>M2 CSWSH y M3 CORS</b>: cualquier página que visite la víctima puede operar el visor; hoy solo manipula la escena, con datos sensibles leería y enviaría información en su nombre.</li>
-<li><b>M4 DoS</b>: un solo <code>POST</code> sin autenticar degrada el servicio para todos (disponibilidad).</li>
-<li><b>M5 robustez/integridad</b>: un resultado silenciosamente incorrecto (matriz irregular) es peor que un error porque nadie lo nota.</li>
-<li><b>Z1–Z4 (CSP, clickjacking, SRI, nosniff)</b>: reducen el daño de otro fallo; SRI sube por el riesgo de cadena de suministro (si el CDN se compromete, ese JS controla el WebSocket).</li>
-<li><b>M6 superficie</b> y <b>Z6 HSTS</b>: bajo en laboratorio local; relevante al desplegar.</li></ol>
+<h2 class="pb">3. Evidencias por paso</h2>
 
-<h2>3. Evidencias de los pasos 1 a 8</h2>
-<h3>Paso 1 · Estado inicial (ZAP, antes)</h3>
-<p>Ambos servicios con <code>docker compose up</code>; ZAP contra <code>http://host.docker.internal:8001</code> (calculadora) y <code>:8000</code> (visor). 8 alertas por app: 0 altas, 4 medias, 2 bajas, 2 informativas. Las alertas son las mismas salvo el conteo de X-Content-Type-Options (4 vs 5).</p>
-<div class="cols"><figure><img src="zap/antes_calculadora_8001.jpeg" style="width:100%"><figcaption>Calculadora (8001): 8 alertas</figcaption></figure><figure><img src="zap/antes_modelo3d_8000.jpeg" style="width:100%"><figcaption>Visor 3D (8000): 8 alertas</figcaption></figure></div>
+<h3>Paso 1 · Estado inicial con ZAP</h3>
+<p>Ambos servicios con <code>docker compose up</code>, escaneados en <code>host.docker.internal:8001</code> (calculadora) y <code>:8000</code> (visor). Resultado: 8 alertas en cada uno (0 altas, 4 medias, 2 bajas, 2 informativas).</p>
+<figure class="crop"><img src="zap/antes_calculadora_8001.jpeg"><figcaption>Calculadora, antes: 8 alertas</figcaption></figure>
+<figure class="crop"><img src="zap/antes_modelo3d_8000.jpeg"><figcaption>Visor 3D, antes: 8 alertas</figcaption></figure>
 
-<h3 class="pb">Paso 2 · Inspección con Burp Suite</h3>
-<p><b>Qué viaja</b> (todo en claro, <code>http://</code> y <code>ws://</code>, sin TLS):</p>
-<ul>
-<li><b>Calculadora:</b> <code>POST /matrices</code> con <code>{"nombre","datos":[[…]]}</code>; <code>GET /matrices</code> devuelve <i>todas</i> las matrices; operaciones como <code>POST /operaciones/sumar?id1=1&amp;id2=2</code> (IDs en la URL, secuenciales).</li>
-<li><b>Visor:</b> <code>GET /api/figura/{nombre}</code> (10 000 puntos); y por WebSocket, ~60 mensajes/s: el navegador envía <code>{"tx","ty","tz","rx","ry","rz","escala"}</code> y recibe <code>{"matrix":[16 floats],"status":"ok"}</code>.</li></ul>
-<p><b>Qué se podía manipular:</b> con Burp <i>Repeater</i> cambiar <code>id1/id2</code> (antes de la corrección devolvía datos de otros); editar un frame WS (<code>escala:1e308</code>, <code>rx:"abc"</code>) o reenviarlo con otro <code>Origin</code>; en <i>Intercept</i> modificar la respuesta <code>matrix</code> y mover/deformar el modelo (no hay integridad ni TLS); inyectar <code>Origin: http://evil.example</code> y obtener CORS reflejado con credenciales.</p>
-<div class="cols"><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/burp/01_http_history.png</code><br>Burp · HTTP history de la calculadora y el visor</div><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/burp/02_websocket_history.png</code><br>Burp · WebSockets history del visor (frames de ida y vuelta)</div></div>
-<div class="cols"><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/burp/03_repeater_idor.png</code><br>Burp · Repeater: GET /matrices sin cookie lista datos ajenos (antes)</div><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/burp/04_ws_origin_y_tamper.png</code><br>Burp · WebSocket con Origin ajeno / frame alterado</div></div>
+<h3>Paso 2 · Tráfico en Burp Suite</h3>
+<p>Todo viaja en claro (<code>http</code> y <code>ws</code>). La calculadora envía matrices en JSON y los IDs van en la URL (<code>/operaciones/sumar?id1=136&amp;id2=…</code>). El visor descarga 10 000 puntos y, por WebSocket, intercambia unos 60 mensajes por segundo: el navegador manda <code>tx, ty, tz, rx, ry, rz, escala</code> y recibe la matriz 4×4. Con Repeater o Intercept se puede cambiar un ID, alterar un frame o modificar la matriz de respuesta, porque no hay TLS ni firma.</p>
+<figure class=""><img src="burp/01_http_history.png"><figcaption>HTTP history: calculadora y visor</figcaption></figure>
+<figure class=""><img src="burp/02_websocket_history.png"><figcaption>WebSockets history: parámetros hacia el servidor y matriz de vuelta</figcaption></figure>
+<figure class=""><img src="burp/03_repeater_idor.png"><figcaption>Repeater: <code>GET /matrices</code> sin credenciales devuelve todas las matrices, incluidas las que dejó el escaneo de ZAP (p. ej. nombre <code>c:/Windows/system.ini</code>)</figcaption></figure>
+
 
 <h3>Pasos 3 y 4 · Clasificación y lo que las herramientas no vieron</h3>
-<p>La clasificación completa está en la tabla del §1. <b>Ni ZAP ni Burp reportaron M1–M5</b>: ZAP hace análisis pasivo + ataques genéricos pero no sabe que <code>/matrices</code> debería ser privado ni envía <code>Origin</code> al WebSocket; se encontraron leyendo <code>main.py</code> y probando a mano. Pruebas contra la versión vulnerable:</p>
-<pre>### 1. CORS visor con origen hostil
-HTTP/1.1 200 OK
-access-control-allow-origin: http://evil.example
-access-control-allow-credentials: true
-### 2. Cabeceras de seguridad calculadora
-server: uvicorn
-### 3. Listado global sin auth
-{&quot;nombre&quot;:&quot;cuenta_secreta&quot;,&quot;datos&quot;:[[1500000.5,42.0]],&quot;id&quot;:1}
-[{&quot;nombre&quot;:&quot;cuenta_secreta&quot;,&quot;datos&quot;:[[1500000.5,42.0]],&quot;id&quot;:1}]
-### 4. NaN / Infinity
-escala=1e308 -&gt; 200
-NaN -&gt; 500
-### 5. Matriz irregular en /calc
-ragged suma -&gt; 200
-### 6. DoS: determinante 400x400
-det 400x400 -&gt; 200 en 0.083363s
-### 7. Info leak raiz visor
-http://calculadora:8000
-/docs visor 200, /docs calc 200
-/openapi calc 200</pre>
-<pre>Origin evil.example aceptado -&gt; {&quot;matrix&quot;:[2.0,0.0,0.0,0.0,0.0,1.4142135623730951,1.414213562373095,0.0,0.0,-1.4
-rx=&#x27;abc&#x27; -&gt; conexion cerrada/ error: ConnectionClosedError no close frame received or sent
-lista JSON -&gt; error: ConnectionClosedError no close frame received or sent
-Traceback (most recent call last):
-  File &quot;/usr/local/lib/python3.11/asyncio/selector_events.py&quot;, line 999, in _read_ready__data_received
-    data = self._sock.recv(self.max_size)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [Errno 104] Connection reset by peer</pre>
+<p>La clasificación está en la tabla del §1. ZAP hace análisis pasivo y ataques genéricos, pero no sabe que <code>/matrices</code> debería ser privado, no envía <code>Origin</code> y no manda frames mal formados al WebSocket. M1 a M6 salieron de leer <code>main.py</code> y probar a mano:</p>
+<pre>ANTES (versión vulnerable)
+CORS con Origin hostil     → access-control-allow-origin: http://evil.example + allow-credentials: true
+GET /matrices (sin sesión) → [{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}]
+WebSocket, Origin evil     → aceptado, devuelve la matriz
+WebSocket {"rx":"abc"}    → conexión cerrada sin aviso (ConnectionClosedError)
+POST {"m":[[NaN]]}        → 500      suma de matrices irregulares → 200 con resultado incorrecto
+determinante 400×400       → 200 (aceptado)</pre>
 
-<h3>Paso 5 · Priorización</h3><p>Ver §2 (ordenada por riesgo y con su criterio).</p>
-
-<h3 class="pb">Paso 6 · Mitigaciones (qué cambió y por qué resuelve el problema)</h3>
+<h3>Paso 6 · Mitigaciones</h3>
 <ul>
-<li><b>M1</b> <code>calculadora_matrices/main.py</code>, <code>repository.py</code>: un middleware asigna a cada navegador un <code>sid</code> aleatorio de 128 bits (cookie HttpOnly, SameSite=Strict) y el repositorio guarda y filtra por dueño. Una matriz ajena responde 404, igual que una inexistente. Resuelve la <i>causa</i> (falta de autorización por objeto), no solo oculta IDs.</li>
-<li><b>M2/M3</b> <code>modelo-3D/main.py</code>: el navegador siempre envía <code>Origin</code>; el handshake del WS se rechaza (403) si no está en <code>ALLOWED_ORIGINS</code>. CORS pasa de <code>*</code>+credenciales a lista blanca, sin credenciales y solo GET. Ya no basta con que la víctima visite una web hostil.</li>
-<li><b>M4/M5</b> <code>models.py</code> (calculadora) y <code>Parametros</code> (visor): se valida en la frontera (rectangular, finita, ≤50×50, rangos de la transformación), el WS limita tamaño, tasa y conexiones, y un mensaje inválido devuelve <code>error</code> sin cerrar el canal. Un manejador 422 propio no devuelve el <code>input</code> rechazado (con <code>NaN</code> eso causaba un 500).</li>
-<li><b>Z1–Z4/Z8</b> middleware de cabeceras en ambas apps: CSP (<code>script-src 'self'</code>; sin <code>unsafe-inline</code> en scripts), <code>X-Frame-Options</code>, <code>nosniff</code>, <code>Referrer-Policy</code>, <code>Permissions-Policy</code>, <code>Cache-Control: no-store</code>. Para cumplir la CSP se sacaron el JS y el CSS a <code>/static</code>, se cambiaron los 15 <code>onclick</code> por <code>data-action</code> y se eliminaron Google Fonts y el CDN de three.js.</li>
-<li><b>M6</b> Docker: usuario no root, <code>cap_drop: ALL</code>, <code>no-new-privileges</code>, puertos solo en <code>127.0.0.1</code>, dependencias fijadas, <code>--no-server-header</code>, <code>/docs</code> apagado por defecto.</li></ul>
+<li><b>M1</b> (<code>calculadora_matrices/main.py</code>, <code>repository.py</code>): cada navegador recibe un <code>sid</code> aleatorio y el repositorio filtra por dueño. Ataca la causa, que era la falta de autorización por objeto.</li>
+<li><b>M2 y M3</b> (<code>modelo-3D/main.py</code>): el navegador siempre envía <code>Origin</code>; si no está en la lista, el handshake se rechaza. Ya no basta con que la víctima visite una web hostil.</li>
+<li><b>M4 y M5</b>: se valida en la entrada (rectangular, finita, tamaños y rangos acotados) y el WebSocket limita tamaño, ritmo y conexiones. Un mensaje inválido recibe <code>error</code> y el canal sigue.</li>
+<li><b>Cabeceras</b>: CSP, <code>X-Frame-Options</code>, <code>nosniff</code>, <code>Referrer-Policy</code>, <code>no-store</code>. Para cumplir la CSP se sacó el JS y el CSS a archivos, se reemplazaron los 15 <code>onclick</code> por <code>data-action</code> y se eliminaron Google Fonts y el CDN de three.js.</li>
+<li><b>Docker</b>: usuario no root, <code>cap_drop: ALL</code>, puertos solo en 127.0.0.1, dependencias fijadas.</li></ul>
 
-<h3>Paso 7 · Estado final (ZAP, después, misma configuración)</h3>
-<div class="cols"><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/zap/despues_calculadora_8001.png</code><br>Calculadora (8001) tras las correcciones</div><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/zap/despues_modelo3d_8000.png</code><br>Visor 3D (8000) tras las correcciones</div></div>
-<p><b>Alertas que se espera que sigan y por qué:</b> <i>HSTS</i> (no hay HTTPS en local; ver Z6), <i>Modern Web Application</i> (informativa), y en la calculadora posiblemente <i>CSP: style-src unsafe-inline</i>: los resultados se pintan con atributos <code>style="…"</code> generados por JS; quitar <code>unsafe-inline</code> de <i>estilos</i> exige reescribirlos como clases CSS. Se priorizó <code>script-src</code> estricta porque ahí vive el riesgo de XSS; el de estilos queda como deuda documentada.</p>
-<p><b>Pruebas manuales tras la corrección</b> (mismas que el paso 4):</p>
-<pre>### Cabeceras calculadora
-set-cookie: sid=9a694a6ac499a678463f28ffcceee5d9; HttpOnly; Path=/; SameSite=strict
-content-security-policy: default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data:; connect-src &#x27;self&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;; frame-ancestors &#x27;none&#x27;
-x-frame-options: DENY
-x-content-type-options: nosniff
-referrer-policy: no-referrer
-permissions-policy: camera=(), microphone=(), geolocation=()
-cross-origin-resource-policy: same-origin
-cache-control: no-store
-### Cabeceras visor /view
-content-security-policy: default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://cdnjs.cloudflare.com; style-src &#x27;self&#x27;; img-src &#x27;self&#x27; data:; connect-src &#x27;self&#x27; ws://localhost:8000 wss://localhost:8000; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;; frame-ancestors &#x27;none&#x27;
-x-frame-options: DENY
-x-content-type-options: nosniff
-referrer-policy: no-referrer
-cache-control: no-store
-### 1. CORS visor con origen hostil
-HTTP/1.1 200 OK
-(sin cabeceras access-control = el navegador bloquea la lectura)
-### 2. Matrices privadas por sesion
-{&quot;nombre&quot;:&quot;cuenta_secreta&quot;,&quot;datos&quot;:[[1500000.5,42.0]],&quot;id&quot;:13}
-sesion A:
-[{&quot;nombre&quot;:&quot;cuenta_secreta&quot;,&quot;datos&quot;:[[1500000.5,42.0]],&quot;id&quot;:13}]
-atacante (otra sesion):
-[]
-### 3. NaN / overflow
-{&quot;detail&quot;:[{&quot;loc&quot;:[&quot;body&quot;,&quot;m&quot;],&quot;msg&quot;:&quot;Value error, los valores deben ser finitos y de magnitud &lt;= 1e+12&quot;}]} -&gt; 422
-overflow cadena -&gt; 422
-### 4. Matriz irregular
-ragged suma -&gt; 422
-### 5. DoS determinante 400x400
-det 400x400 -&gt; 422
-### 6. Info leak
-{&quot;status&quot;:&quot;online&quot;,&quot;message&quot;:&quot;API de Modelo 3D activa (las matrices las calcula calculadora_matrices)&quot;,&quot;endpoints&quot;:{&quot;figuras&quot;:&quot;/api/figuras&quot;,&quot;figura&quot;:&quot;/api/figura/{nombre}&quot;,&quot;csv_model&quot;:&quot;/api/modelo-csv&quot;,&quot;websocket&quot;:&quot;/ws/transform&quot;,&quot;viewer&quot;:&quot;/view&quot;}}
-/docs visor 404
-/openapi.json calc 404
-curl: (2) no URL specified
-curl: try &#x27;curl --help&#x27; or &#x27;curl --manual&#x27; for more information
-{&quot;detail&quot;:&quot;figura desconocida. Opciones: esfera, cubo, toroide&quot;}</pre>
-<pre>origen evil.example: handshake rechazado, HTTP 403
-origen legítimo: &#x27;{&quot;rx&quot;:45,&quot;escala&quot;:2}&#x27; -&gt; {&quot;matrix&quot;:[2.0,0.0,0.0,0.0,0.0,1.4142135623730951,1.414213562373095,0.
-rx=&#x27;abc&#x27;: &#x27;{&quot;rx&quot;:&quot;abc&quot;}&#x27; -&gt; {&quot;status&quot;:&quot;error&quot;,&quot;detail&quot;:&quot;parámetros inválidos&quot;}
-rx=&#x27;abc&#x27;: &#x27;{&quot;rx&quot;:10}&#x27; -&gt; {&quot;matrix&quot;:[1.0,0.0,0.0,0.0,0.0,0.984807753012208,0.17364817766693033,0
-lista JSON: &#x27;[1,2,3]&#x27; -&gt; {&quot;status&quot;:&quot;error&quot;,&quot;detail&quot;:&quot;parámetros inválidos&quot;}
-lista JSON: &#x27;{&quot;rx&quot;:10}&#x27; -&gt; {&quot;matrix&quot;:[1.0,0.0,0.0,0.0,0.0,0.984807753012208,0.17364817766693033,0
-NaN: &#x27;{&quot;rx&quot;:NaN}&#x27; -&gt; {&quot;status&quot;:&quot;error&quot;,&quot;detail&quot;:&quot;parámetros inválidos&quot;}
-mensaje 20MB: &#x27;{&quot;rx&quot;: 1, &quot;pad&quot;: &quot;AAAAAAAAAAAA&#x27; -&gt; conexión cerrada (ConnectionClosedError)</pre>
+<h3>Paso 7 · Estado final con ZAP</h3>
+<p>Misma configuración que el paso 1. La calculadora pasó de 8 a 3 alertas; las que quedan están explicadas en la tabla (CSP de estilos, Modern Web Application y la cookie <code>sid</code>).</p>
+<figure class="crop"><img src="zap/despues_calculadora_8001.png"><figcaption>Calculadora, después: 3 alertas (0 altas, 1 media, 2 informativas)</figcaption></figure>
+
+<pre>DESPUÉS (versión corregida)
+CORS con Origin hostil     → sin cabeceras access-control (el navegador bloquea la lectura)
+GET /matrices (otra sesión)→ []
+WebSocket, Origin evil     → handshake rechazado, HTTP 403
+WebSocket {"rx":"abc"}    → {"status":"error","detail":"parámetros inválidos"} y el canal sigue
+POST {"m":[[NaN]]}        → 422      matrices irregulares → 422      determinante 400×400 → 422</pre>
 
 <h3>Paso 8 · Nada se rompió</h3>
-<p>Suite e2e (Playwright): las 8 pruebas originales siguen pasando y se añadieron 15 de regresión de seguridad. <b>Esas 15 se ejecutaron también contra la versión vulnerable (commit base): 14 fallan</b> (la que pasa solo comprueba que la calculadora sigue calculando), así que realmente detectan los fallos.</p>
-<pre>Contra la versión vulnerable (commit base):  14 failed, 1 passed
-Contra la versión corregida:                 23 passed in 4.43s</pre>
-<p>Los 8 e2e originales cambiaron en un punto: elegían matrices por ID global (<code>select_option("3")</code>) y solo funcionaban porque todos los usuarios compartían la misma lista; ahora eligen por posición dentro de su propia lista (esa dependencia <i>era</i> M1).</p>
-<div class="cols"><figure><img src="despues/calculadora_funciona.png" style="width:100%"><figcaption>Calculadora corregida: A + B = resultado</figcaption></figure><figure><img src="despues/visor_funciona.png" style="width:100%"><figcaption>Visor corregido: WebSocket «Conectado», 10 000 puntos, esfera girando</figcaption></figure></div>
+<p>Las 8 pruebas e2e originales siguen pasando y se agregaron 15 de seguridad: <b>14 fallan en la versión vulnerable y todas pasan en la corregida</b> (23 en total). Dos de las pruebas originales cambiaron: elegían la matriz por ID global y solo funcionaban porque todos compartían la misma lista; ahora eligen por posición en la lista propia (esa dependencia era M1).</p>
+<div class="cols"><figure class=""><img src="despues/calculadora_funciona.png"><figcaption>Calculadora: A + B = resultado</figcaption></figure><figure class=""><img src="despues/visor_funciona.png"><figcaption>Visor: WebSocket conectado, 10 000 puntos</figcaption></figure></div>
 
-<h2 class="pb">4. Si esos números fueran datos sensibles (montos, cuentas, expedientes)</h2>
-<p>Alertas como <i>Retrieved from Cache</i> o la falta de HSTS parecen inocuas con matrices de ejemplo; se clasificaron como falsos positivos <i>para este laboratorio</i>. Con datos sensibles dejarían de serlo. Qué podría hacer un atacante, según lo demostrado en este trabajo:</p>
-<table><tr><th>Capacidad del atacante</th><th>Cómo (ya probado salvo indicado)</th><th>Protección que aplicaría</th></tr>
-<tr><td><b>Ver</b> los datos de otros</td><td>M1: <code>GET /matrices</code> devolvía todo; IDs secuenciales adivinables.</td><td>Autenticación + autorización por objeto (dueño/rol) en cada consulta; IDs no secuenciales (UUID); respuestas 404 iguales para “no existe” y “no es tuyo”. <b>Aplicado</b> (sesión).</td></tr>
-<tr><td><b>Leer el tráfico</b> en la red (Wi-Fi, proxy)</td><td>Burp muestra cuerpos, URLs y frames WS en claro (<code>http</code>/<code>ws</code>).</td><td>TLS en todo (<code>https</code>/<code>wss</code>) + HSTS (por eso Z6 <i>sí</i> sería real en producción); cookies <code>Secure</code>. Cifrado en reposo del almacén.</td></tr>
-<tr><td><b>Modificar</b> montos en tránsito o en el origen</td><td>Sin TLS ni firma, Burp altera una respuesta (<code>matrix</code>) y el cliente la acepta. Con <code>POST</code> abierto se pueden crear/alterar registros.</td><td>TLS evita el MITM; validación estricta de entradas y rangos (<b>aplicado</b>); control de integridad (HMAC/firmas) y pistas de auditoría para operaciones críticas; permisos de escritura separados de los de lectura.</td></tr>
-<tr><td><b>Actuar en nombre</b> de la víctima desde otra web</td><td>M2/M3: CSWSH y CORS reflejado con credenciales (Origin <code>evil.example</code> aceptado).</td><td>Allowlist de <code>Origin</code> (<b>aplicado</b>), cookies <code>SameSite=Strict</code> (<b>aplicado</b>), tokens CSRF/Bearer en vez de cookies ambientales para operaciones de escritura.</td></tr>
-<tr><td><b>Dejar sin servicio</b> / forzar errores que filtran datos</td><td>M4/M5: entradas enormes, <code>NaN</code>, errores 500 y mensajes que repetían la entrada.</td><td>Límites y <i>rate limiting</i> (<b>aplicado</b> en parte); errores genéricos sin eco de datos (<b>aplicado</b>); no registrar valores sensibles en logs.</td></tr>
-<tr><td><b>Recuperar</b> datos de cachés</td><td><i>Retrieved from Cache</i>: copias en navegador/proxy/CDN.</td><td><code>Cache-Control: no-store</code> (<b>aplicado</b>); sin terceros (CDN/fuentes) que vean IP, <i>Referer</i> o contenido (<b>aplicado</b>).</td></tr></table>
-<p>Idea de fondo: <b>un dato es sensible por quién puede leerlo o cambiarlo, no por su forma</b>. Una matriz de rotación y una matriz de saldos viajan igual; lo que cambia es el costo de que alguien ajeno la vea o la altere.</p>
+<h2 class="pb">4. ¿Y si los números fueran datos sensibles?</h2>
+<p>Alertas como <i>Retrieved from Cache</i> o HSTS se clasificaron como falsos positivos <b>para este laboratorio</b>. Con montos, cuentas o expedientes dejarían de serlo. Un atacante podría:</p>
+<table><tr><th style="width:17%">Hacer</th><th style="width:40%">Cómo (ya demostrado, salvo lo indicado)</th><th>Protección</th></tr>
+<tr><td><b>Ver</b> datos de otros</td><td>M1: <code>GET /matrices</code> devolvía todo.</td><td>Autenticación y autorización por objeto; IDs no secuenciales; 404 igual para “no existe” y “no es tuyo”. <span class="ok">Aplicado (sesión).</span></td></tr>
+<tr><td><b>Leer</b> el tráfico</td><td>Burp muestra cuerpos y frames en claro.</td><td>TLS (<code>https</code>/<code>wss</code>), HSTS (aquí sí sería real), cookies <code>Secure</code>, cifrado en reposo.</td></tr>
+<tr><td><b>Modificar</b> montos</td><td>Sin TLS ni firma se puede alterar una respuesta; con <code>POST</code> abierto, crear o cambiar registros.</td><td>TLS, validación y rangos <span class="ok">(aplicado)</span>, firma/HMAC, auditoría, permisos de escritura separados.</td></tr>
+<tr><td><b>Actuar por la víctima</b> desde otra web</td><td>M2 y M3: CSWSH y CORS reflejado.</td><td>Lista de orígenes y <code>SameSite=Strict</code> <span class="ok">(aplicado)</span>; token anti-CSRF para escrituras.</td></tr>
+<tr><td><b>Tumbar</b> el servicio o sacar datos de errores</td><td>M4 y M5: entradas enormes, <code>NaN</code>, errores que repetían la entrada.</td><td>Límites, <i>rate limiting</i>, errores genéricos <span class="ok">(aplicado en parte)</span>; no registrar valores sensibles.</td></tr>
+<tr><td><b>Recuperar</b> datos de cachés</td><td><i>Retrieved from Cache</i>: copias en navegador, proxy o CDN.</td><td><code>no-store</code> y sin terceros que vean IP o <i>Referer</i> <span class="ok">(aplicado)</span>.</td></tr></table>
+<div class="nota">Un dato es sensible por <b>quién puede leerlo o cambiarlo</b>, no por su forma. Una matriz de rotación y una de saldos viajan igual; cambia el costo de que alguien ajeno la vea o la altere.</div>
 
-<h2>5. Conclusión: límites de las herramientas automáticas</h2>
-<p>ZAP encontró bien lo que se ve en una respuesta HTTP aislada (cabeceras, SRI, CORS de terceros): 8 alertas útiles pero de impacto medio-bajo. <b>No encontró los 5 hallazgos más graves</b> (M1–M5), porque requieren entender la intención de la aplicación (“estos datos son de cada usuario”), probar con un <code>Origin</code> hostil o con un frame WebSocket mal formado, o reconocer que sumar matrices irregulares sin error es un bug de integridad. Además, algunas alertas son falsos positivos según el contexto (HSTS en HTTP local; CORS de Google Fonts) y hay que poder explicar por qué. Las herramientas son un buen primer filtro y una red de regresión, no un veredicto: la revisión de código, el modelado de amenazas y las pruebas de regresión propias (las 15 de este trabajo) son las que cierran el trabajo.</p>
+<h2>5. Conclusión</h2>
+<p>ZAP encontró bien lo que se ve en una respuesta HTTP aislada (cabeceras, SRI, recursos de terceros), pero <b>no encontró ninguno de los seis hallazgos más importantes</b>. Esos requieren entender la intención de la app (“estos datos son de cada usuario”), probar con un <code>Origin</code> hostil o un frame mal formado, o notar que sumar matrices irregulares sin error es un fallo de integridad. Además, varias alertas eran falsos positivos según el contexto (HSTS en HTTP local, CORS de Google Fonts) y hay que saber explicarlo. Las herramientas sirven como primer filtro y como red de regresión; la revisión de código, el modelado de amenazas y las pruebas propias son las que cierran el trabajo.</p>
 
-<h2 class="pb">Anexos</h2>
-<p><b>Anexo A – Reporte ZAP antes:</b> <code>evidencias/zap/reporte_antes_calculadora.html</code>, <code>reporte_antes_modelo3d.html</code> (y la lista de alertas en la captura del paso 1).<br>
-<b>Anexo B – Reporte ZAP después:</b> <code>evidencias/zap/reporte_despues_calculadora.html</code>, <code>reporte_despues_modelo3d.html</code>.<br>
-<b>Anexo C – Pruebas:</b> <code>evidencias/antes/</code>, <code>evidencias/despues/</code>, <code>evidencias/ws_probe.py</code>, <code>test_e2e/test_regresion_seguridad.py</code>.</p>
-<div class="falta">PENDIENTE: guardar la captura en <code>evidencias/zap/anexo_a_alertas_antes_calculadora.png</code><br>Anexo A · lista detallada de alertas, calculadora</div><div class="falta">PENDIENTE: guardar la captura en <code>evidencias/zap/anexo_a_alertas_antes_modelo3d.png</code><br>Anexo A · lista detallada de alertas, visor</div>
+<h2>Anexos</h2><ul><li>Pruebas manuales y de regresión: <code>evidencias/antes/</code>, <code>evidencias/despues/</code>, <code>test_e2e/test_regresion_seguridad.py</code></li></ul>
+<div class="cols"><figure class=""><img src="zap/anexo_a_alertas_antes_calculadora.png"><figcaption>Anexo A · alertas detalladas de la calculadora, antes</figcaption></figure><figure class=""><img src="zap/anexo_a_alertas_antes_modelo3d.png"><figcaption>Anexo A · alertas detalladas del visor, antes</figcaption></figure></div>
 </body></html>
