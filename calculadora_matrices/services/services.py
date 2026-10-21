@@ -1,3 +1,6 @@
+import math
+
+
 def sumar(m1: list[list[float]], m2: list[list[float]]) -> list[list[float]]:
     if not m1 or not m2 or not m1[0] or not m2[0]:
         raise ValueError("Las matrices no pueden estar vacías")
@@ -86,3 +89,68 @@ def determinante(m: list[list[float]]) -> float:
     # Redondear si está muy cerca de un entero para evitar errores de precisión de punto flotante
     return round(det, 6) if abs(det - round(det)) < 1e-9 else round(det, 4)
 
+
+
+# ---------------------------------------------------------------------------
+# Transformaciones 3D con matrices homogéneas 4x4
+# ---------------------------------------------------------------------------
+
+def rotacion_x(grados: float) -> list[list[float]]:
+    a = math.radians(grados)
+    return [
+        [1, 0, 0, 0],
+        [0, math.cos(a), -math.sin(a), 0],
+        [0, math.sin(a), math.cos(a), 0],
+        [0, 0, 0, 1]
+    ]
+
+
+def rotacion_y(grados: float) -> list[list[float]]:
+    a = math.radians(grados)
+    return [
+        [math.cos(a), 0, math.sin(a), 0],
+        [0, 1, 0, 0],
+        [-math.sin(a), 0, math.cos(a), 0],
+        [0, 0, 0, 1]
+    ]
+
+
+def rotacion_z(grados: float) -> list[list[float]]:
+    a = math.radians(grados)
+    return [
+        [math.cos(a), -math.sin(a), 0, 0],
+        [math.sin(a), math.cos(a), 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ]
+
+
+def traslacion(tx: float, ty: float, tz: float) -> list[list[float]]:
+    return [
+        [1, 0, 0, tx],
+        [0, 1, 0, ty],
+        [0, 0, 1, tz],
+        [0, 0, 0, 1]
+    ]
+
+
+def escalado(s: float) -> list[list[float]]:
+    return [
+        [s, 0, 0, 0],
+        [0, s, 0, 0],
+        [0, 0, s, 0],
+        [0, 0, 0, 1]
+    ]
+
+
+def transformacion(tx: float, ty: float, tz: float, rx: float, ry: float, rz: float, s: float = 1.0) -> list[list[float]]:
+    """Matriz compuesta M = T · Rz · Ry · Rx · S (primero escala, luego rota X, Y, Z y al final traslada)."""
+    M = traslacion(tx, ty, tz)
+    for m in (rotacion_z(rz), rotacion_y(ry), rotacion_x(rx), escalado(s)):
+        M = multiplicar(M, m)
+    return M
+
+
+def column_major(m: list[list[float]]) -> list[float]:
+    """Aplana la matriz columna por columna (formato de OpenGL / Three.js) = transpuesta leída por filas."""
+    return [valor for fila in transponer(m) for valor in fila]
