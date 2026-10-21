@@ -10,5 +10,6 @@ FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_a
 FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/multiplicar-cadena-cuerpo3]
 FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/transformacion-cuerpo4]
 FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/matrices-cuerpo5]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_nan
 FAILED test_e2e/test_regresion_seguridad.py::test_docs_no_expuestos
-13 failed, 2 passed in 1.86s
+14 failed, 1 passed in 1.79s

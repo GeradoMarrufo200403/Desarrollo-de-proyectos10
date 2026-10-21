@@ -108,7 +108,7 @@ def test_calculadora_rechaza_entradas_abusivas(api, ruta, cuerpo):
 
 
 def test_calculadora_rechaza_nan(api):
-    r = api.post(f"{CALC}/calc/transponer", headers={"content-type": "application/json"}, data='{"m":[[NaN]]}')
+    r = api.post(f"{CALC}/calc/transponer", headers={"content-type": "application/json"}, data=b'{"m":[[NaN]]}')
     assert r.status == 422
 
 

@@ -60,9 +60,9 @@ async def cabeceras_seguridad(request: Request, call_next):
     resp = await call_next(request)
     host = request.headers.get("host", "")
     host = host if HOST_RE.match(host) else "localhost:8000"
-    # three.js viene de cdnjs (con SRI); el WebSocket solo al mismo host
+    # todo se sirve del mismo origen (three.js incluido); el WebSocket solo al mismo host
     resp.headers["Content-Security-Policy"] = (
-        "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; "
+        "default-src 'self'; script-src 'self'; "
         f"style-src 'self'; img-src 'self' data:; connect-src 'self' ws://{host} wss://{host}; "
         "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'")
     resp.headers["X-Frame-Options"] = "DENY"
