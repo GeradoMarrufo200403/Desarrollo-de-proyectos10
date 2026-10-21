@@ -1,0 +1,20 @@
+### 1. CORS visor con origen hostil
+HTTP/1.1 200 OK
+access-control-allow-origin: http://evil.example
+access-control-allow-credentials: true
+### 2. Cabeceras de seguridad calculadora
+server: uvicorn
+### 3. Listado global sin auth
+{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}
+[{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}]
+### 4. NaN / Infinity
+escala=1e308 -> 200
+NaN -> 500
+### 5. Matriz irregular en /calc
+ragged suma -> 200
+### 6. DoS: determinante 400x400
+det 400x400 -> 200 en 0.083363s
+### 7. Info leak raiz visor
+http://calculadora:8000
+/docs visor 200, /docs calc 200
+/openapi calc 200

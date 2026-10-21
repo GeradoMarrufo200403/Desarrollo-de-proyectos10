@@ -14,5 +14,9 @@ COPY . .
 
 EXPOSE 8000
 
+# No correr como root
+RUN useradd --system --uid 10001 app
+USER app
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# --ws-max-size: tope de 4 KB por mensaje WebSocket (el visor envía ~150 bytes)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--no-server-header", "--ws-max-size", "4096"]

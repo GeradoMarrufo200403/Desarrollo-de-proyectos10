@@ -2,18 +2,32 @@ services:
   calculadora:
     build: ./calculadora_matrices
     ports:
-      - "8001:8000"
+      # Solo loopback: las APIs no quedan expuestas a la red local
+      - "127.0.0.1:8001:8000"
     volumes:
       - ./calculadora_matrices:/app
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
 
   modelo3d:
     build: ./modelo-3D
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     volumes:
       - ./modelo-3D:/app
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     environment:
       - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
       - CALC_URL=http://calculadora:8000
+      # Orígenes que pueden abrir el WebSocket y llamar a la API desde un navegador
+      - ALLOWED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
     depends_on:
       - calculadora

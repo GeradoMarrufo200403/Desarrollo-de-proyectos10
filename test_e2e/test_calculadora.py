@@ -1,3 +1,5 @@
+# Las matrices son privadas por sesión: cada test (contexto nuevo) ve solo las suyas,
+# así que se elige por posición en la lista (index 0 es el placeholder) y no por ID global.
 from playwright.sync_api import Page, expect
 
 BTN_GUARDAR = "💾 Guardar Matriz en Backend"
@@ -51,8 +53,8 @@ def test_suma_de_matrices_guardadas(page: Page, calculadora_url: str) -> None:
     llenar_matriz(page, ["-3", "4", "3", "4"])
     guardar_matriz(page)
 
-    page.get_by_label("Matriz 1 (A)").select_option("1")
-    page.get_by_label("Matriz 2 (B)").select_option("2")
+    page.get_by_label("Matriz 1 (A)").select_option(index=1)
+    page.get_by_label("Matriz 2 (B)").select_option(index=2)
     page.get_by_role("button", name=BTN_SUMA).click()
 
 
@@ -64,8 +66,8 @@ def test_matrices_aleatorias_y_suma(page: Page, calculadora_url: str) -> None:
         page.get_by_role("button", name=BTN_ALEATORIOS).click()
         guardar_matriz(page)
 
-    page.get_by_label("Matriz 1 (A)").select_option("3")
-    page.get_by_label("Matriz 2 (B)").select_option("4")
+    page.get_by_label("Matriz 1 (A)").select_option(index=1)
+    page.get_by_label("Matriz 2 (B)").select_option(index=2)
     page.get_by_role("button", name=BTN_SUMA).click()
 
 
@@ -75,5 +77,5 @@ def test_determinante(page: Page, calculadora_url: str) -> None:
     guardar_matriz(page)
 
     page.get_by_role("button", name=BTN_DETERMINANTE_TAB).click()
-    page.get_by_label("Matriz Cuadrada (A)").select_option("2")
+    page.get_by_label("Matriz Cuadrada (A)").select_option(index=1)
     page.get_by_role("button", name=BTN_DETERMINANTE).click()

@@ -1,13 +1,18 @@
 import csv
+import json
 import math
 import os
+import re
+import time
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
 import httpx
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, ValidationError
 
 
 # URL del microservicio calculadora_matrices.
@@ -24,17 +29,54 @@ async def lifespan(app: FastAPI):
     await app.state.calc.aclose()
 
 
-app = FastAPI(title="3D Model & Matrix Transformation API", lifespan=lifespan)
+# Swagger/OpenAPI solo cuando se pide (ENABLE_DOCS=1)
+DOCS = os.getenv("ENABLE_DOCS") == "1"
+app = FastAPI(
+    title="3D Model & Matrix Transformation API",
+    lifespan=lifespan,
+    docs_url="/docs" if DOCS else None,
+    redoc_url=None,
+    openapi_url="/openapi.json" if DOCS else None,
+)
 
+# Orígenes de confianza: los únicos que pueden leer la API desde un navegador
+# y abrir el WebSocket. Con "*" + credenciales cualquier web podía usar el visor.
+ALLOWED_ORIGINS = [o.strip() for o in os.getenv(
+    "ALLOWED_ORIGINS", "http://localhost:8000,http://127.0.0.1:8000").split(",") if o.strip()]
 
-# Habilitar CORS para permitir que Three.js se conecte sin restricciones
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
+    allow_methods=["GET"],
+    allow_headers=[],
 )
+
+HOST_RE = re.compile(r"^[A-Za-z0-9.\-]+(:\d{1,5})?$")
+
+
+@app.middleware("http")
+async def cabeceras_seguridad(request: Request, call_next):
+    resp = await call_next(request)
+    host = request.headers.get("host", "")
+    host = host if HOST_RE.match(host) else "localhost:8000"
+    # three.js viene de cdnjs (con SRI); el WebSocket solo al mismo host
+    resp.headers["Content-Security-Policy"] = (
+        "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; "
+        f"style-src 'self'; img-src 'self' data:; connect-src 'self' ws://{host} wss://{host}; "
+        "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'")
+    resp.headers["X-Frame-Options"] = "DENY"
+    resp.headers["X-Content-Type-Options"] = "nosniff"
+    resp.headers["Referrer-Policy"] = "no-referrer"
+    resp.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    resp.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+    resp.headers["Cache-Control"] = "no-store"
+    if os.getenv("ENABLE_HSTS") == "1":  # solo tiene sentido detrás de HTTPS
+        resp.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return resp
+
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Ruta al archivo CSV con las coordenadas (debe estar en el mismo directorio o volumen Docker)
@@ -130,14 +172,12 @@ def read_root():
     return {
         "status": "online",
         "message": "API de Modelo 3D activa (las matrices las calcula calculadora_matrices)",
-        "calculadora": CALC_URL,
         "endpoints": {
             "figuras": "/api/figuras",
             "figura": "/api/figura/{nombre}",
             "csv_model": "/api/modelo-csv",
             "websocket": "/ws/transform",
-            "viewer": "/view",
-            "docs": "/docs"
+            "viewer": "/view"
         }
     }
 
@@ -162,7 +202,7 @@ def obtener_puntos_figura(nombre: str):
     """Devuelve los vértices de una figura: esfera, cubo o toroide."""
     puntos = obtener_figura(nombre)
     if puntos is None:
-        raise HTTPException(404, f"figura desconocida: {nombre}. Opciones: {', '.join(FIGURAS)}")
+        raise HTTPException(404, f"figura desconocida. Opciones: {', '.join(FIGURAS)}")
     return {
         "figura": nombre,
         "total_puntos": len(puntos),
@@ -170,18 +210,59 @@ def obtener_puntos_figura(nombre: str):
     }
 
 
+MAX_CONEXIONES_WS = 20
+MAX_MENSAJES_POR_SEG = 200
+MAX_BYTES_MENSAJE = 1024
+conexiones_ws = 0
+
+
+class Parametros(BaseModel):
+    """Lo único que el visor puede pedir: números finitos y acotados."""
+    tx: float = Field(0.0, ge=-1000, le=1000, allow_inf_nan=False)
+    ty: float = Field(0.0, ge=-1000, le=1000, allow_inf_nan=False)
+    tz: float = Field(0.0, ge=-1000, le=1000, allow_inf_nan=False)
+    rx: float = Field(0.0, ge=-1e6, le=1e6, allow_inf_nan=False)
+    ry: float = Field(0.0, ge=-1e6, le=1e6, allow_inf_nan=False)
+    rz: float = Field(0.0, ge=-1e6, le=1e6, allow_inf_nan=False)
+    escala: float = Field(1.0, ge=-100, le=100, allow_inf_nan=False)
+
+
 @app.websocket("/ws/transform")
 async def websocket_transform(websocket: WebSocket):
     """Canal WebSocket: recibe parámetros de movimiento y devuelve la matriz 4x4 calculada por calculadora_matrices."""
+    global conexiones_ws
+    # El navegador SIEMPRE envía Origin; si no es uno de confianza, es una web ajena
+    # intentando usar el visor desde el navegador de la víctima (Cross-Site WebSocket Hijacking).
+    origin = websocket.headers.get("origin")
+    if origin is not None and origin not in ALLOWED_ORIGINS:
+        await websocket.close(code=1008)
+        return
+    if conexiones_ws >= MAX_CONEXIONES_WS:
+        await websocket.close(code=1013)
+        return
+
     await websocket.accept()
+    conexiones_ws += 1
     client: httpx.AsyncClient = websocket.app.state.calc
+    ventana, enviados = time.monotonic(), 0
     try:
         while True:
-            data = await websocket.receive_json()
+            texto = await websocket.receive_text()
 
-            # Extraer traslaciones, rotaciones (grados) y escala recibidas
-            parametros = {k: float(data.get(k, 1.0 if k == "escala" else 0.0))
-                          for k in ("tx", "ty", "tz", "rx", "ry", "rz", "escala")}
+            ahora = time.monotonic()
+            if ahora - ventana >= 1:
+                ventana, enviados = ahora, 0
+            enviados += 1
+            if enviados > MAX_MENSAJES_POR_SEG or len(texto) > MAX_BYTES_MENSAJE:
+                await websocket.close(code=1008)
+                return
+
+            # Entrada no confiable: JSON inválido o fuera de rango no debe tumbar el canal
+            try:
+                parametros = Parametros(**json.loads(texto)).model_dump()
+            except (ValueError, TypeError, ValidationError):
+                await websocket.send_json({"status": "error", "detail": "parámetros inválidos"})
+                continue
 
             try:
                 matrix_4x4 = await pedir_transformacion(client, parametros)
@@ -200,6 +281,8 @@ async def websocket_transform(websocket: WebSocket):
             })
     except WebSocketDisconnect:
         print("Cliente WebSocket desconectado")
+    finally:
+        conexiones_ws -= 1
 
 
 @app.get("/view", response_class=HTMLResponse)

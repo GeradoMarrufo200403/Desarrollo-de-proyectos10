@@ -1,0 +1,26 @@
+Origin evil.example aceptado -> {"matrix":[2.0,0.0,0.0,0.0,0.0,1.4142135623730951,1.414213562373095,0.0,0.0,-1.4
+rx='abc' -> conexion cerrada/ error: ConnectionClosedError no close frame received or sent
+lista JSON -> error: ConnectionClosedError no close frame received or sent
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/asyncio/selector_events.py", line 999, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<stdin>", line 17, in main
+  File "/usr/local/lib/python3.11/site-packages/websockets/asyncio/connection.py", line 317, in recv
+    raise self.protocol.close_exc from self.recv_exc
+websockets.exceptions.ConnectionClosedError: received 1009 (message too big) frame exceeds limit of 16777216 bytes; then sent 1009 (message too big) frame exceeds limit of 16777216 bytes

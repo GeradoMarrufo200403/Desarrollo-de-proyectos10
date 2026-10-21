@@ -1,0 +1,14 @@
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_cabeceras_de_seguridad
+FAILED test_e2e/test_regresion_seguridad.py::test_visor_cabeceras_de_seguridad
+FAILED test_e2e/test_regresion_seguridad.py::test_visor_cors_no_refleja_origen_ajeno
+FAILED test_e2e/test_regresion_seguridad.py::test_websocket_rechaza_origen_ajeno[chromium]
+FAILED test_e2e/test_regresion_seguridad.py::test_websocket_sobrevive_a_entrada_invalida[chromium]
+FAILED test_e2e/test_regresion_seguridad.py::test_matrices_son_privadas_por_sesion
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/sumar-cuerpo0]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/transponer-cuerpo1]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/determinante-cuerpo2]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/multiplicar-cadena-cuerpo3]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/calc/transformacion-cuerpo4]
+FAILED test_e2e/test_regresion_seguridad.py::test_calculadora_rechaza_entradas_abusivas[/matrices-cuerpo5]
+FAILED test_e2e/test_regresion_seguridad.py::test_docs_no_expuestos
+13 failed, 2 passed in 1.86s
