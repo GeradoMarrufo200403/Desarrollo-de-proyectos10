@@ -1,0 +1,8 @@
+origen evil.example: handshake rechazado, HTTP 403
+origen legítimo: '{"rx":45,"escala":2}' -> {"matrix":[2.0,0.0,0.0,0.0,0.0,1.4142135623730951,1.414213562373095,0.
+rx='abc': '{"rx":"abc"}' -> {"status":"error","detail":"parámetros inválidos"}
+rx='abc': '{"rx":10}' -> {"matrix":[1.0,0.0,0.0,0.0,0.0,0.984807753012208,0.17364817766693033,0
+lista JSON: '[1,2,3]' -> {"status":"error","detail":"parámetros inválidos"}
+lista JSON: '{"rx":10}' -> {"matrix":[1.0,0.0,0.0,0.0,0.0,0.984807753012208,0.17364817766693033,0
+NaN: '{"rx":NaN}' -> {"status":"error","detail":"parámetros inválidos"}
+mensaje 20MB: '{"rx": 1, "pad": "AAAAAAAAAAAA' -> conexión cerrada (ConnectionClosedError)

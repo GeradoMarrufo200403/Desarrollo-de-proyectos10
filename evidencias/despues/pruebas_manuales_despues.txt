@@ -1,0 +1,35 @@
+### Cabeceras calculadora
+set-cookie: sid=d707e33739a9267a1292044b7aafe0d4; HttpOnly; Path=/; SameSite=strict
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+x-frame-options: DENY
+x-content-type-options: nosniff
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+cross-origin-resource-policy: same-origin
+cache-control: no-store
+### Cabeceras visor /view
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' ws://localhost:8000 wss://localhost:8000; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+x-frame-options: DENY
+x-content-type-options: nosniff
+referrer-policy: no-referrer
+cache-control: no-store
+### 1. CORS visor con origen hostil
+HTTP/1.1 200 OK
+(sin cabeceras access-control = el navegador bloquea la lectura)
+### 2. Matrices privadas por sesion
+{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}
+sesion A:
+[{"nombre":"cuenta_secreta","datos":[[1500000.5,42.0]],"id":1}]
+atacante (otra sesion):
+[]
+### 3. NaN / overflow
+{"detail":[{"loc":["body","m"],"msg":"Value error, los valores deben ser finitos y de magnitud <= 1e+12"}]} -> 422
+overflow cadena -> 422
+### 4. Matriz irregular
+ragged suma -> 422
+### 5. DoS determinante 400x400
+det 400x400 -> 422
+### 6. Info leak
+{"status":"online","message":"API de Modelo 3D activa (las matrices las calcula calculadora_matrices)","endpoints":{"figuras":"/api/figuras","figura":"/api/figura/{nombre}","csv_model":"/api/modelo-csv","websocket":"/ws/transform","viewer":"/view"}}
+/docs visor 404
+/openapi.json calc 404

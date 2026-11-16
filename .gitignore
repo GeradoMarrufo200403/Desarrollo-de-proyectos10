@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+.venv/
+venv/
+Implementación e Integración de IA y Automatización de Procesos.pdf

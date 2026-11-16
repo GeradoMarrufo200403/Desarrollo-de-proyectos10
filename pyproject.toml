@@ -1,0 +1,18 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["venv", ".venv", "**/venv"]
+
+[tool.ruff.lint]
+# E/W: estilo, F: errores, B: bugbear, S: seguridad (bandit), C90: complejidad
+select = ["E", "W", "F", "B", "S", "C90"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.per-file-ignores]
+# En pruebas se permite assert
+"test_e2e/*" = ["S101"]
+
+[tool.pytest.ini_options]
+testpaths = ["test_e2e"]

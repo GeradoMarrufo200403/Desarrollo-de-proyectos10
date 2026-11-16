@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizador 3D - FastAPI & Three.js</title>
+    <link rel="stylesheet" href="/static/viewer.css">
+    <!-- three.js r128 (MIT) servido localmente: sin CDN de terceros, sin SRI que mantener -->
+    <script src="/static/three.min.js"></script>
+</head>
+
+<body>
+
+    <div id="info">
+        <h3>Visualizador 3D (FastAPI + WebSocket)</h3>
+        <p>
+            Figura:
+            <select id="figura">
+                <option value="esfera">Esfera</option>
+                <option value="cubo">Cubo</option>
+                <option value="toroide">Toroide (CSV)</option>
+            </select>
+        </p>
+        <p>Estado WebSocket: <span id="ws-status">Conectando...</span></p>
+        <p>Puntos cargados: <strong id="point-count">0</strong></p>
+    </div>
+
+    <script src="/static/viewer.js"></script>
+</body>
+
+</html>
