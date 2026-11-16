@@ -12,6 +12,12 @@ services:
       - ALL
     environment:
       - PYTHONDONTWRITEBYTECODE=1
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   modelo3d:
     build: ./modelo-3D
