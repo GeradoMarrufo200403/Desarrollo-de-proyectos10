@@ -1,5 +1,6 @@
 ﻿import csv
 import math
+import os
 from pathlib import Path
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -38,7 +39,10 @@ app.add_middleware(
 
 MODELS_DIR = Path("modelos_3d")
 CSV_FILE_PATH = Path("modelo_3d.csv")
-CALCULADORA_API_URL = "http://host.docker.internal:8000/operaciones/transformacion-3d"
+CALCULADORA_BASE_URL = os.getenv("CALCULADORA_BASE_URL", "http://host.docker.internal:8000")
+CALCULADORA_API_URL = f"{CALCULADORA_BASE_URL}/operaciones/transformacion-3d"
+CALCULADORA_MORPH_URL = f"{CALCULADORA_BASE_URL}/calc/morph"
+CALCULADORA_FIGURAS_URL = f"{CALCULADORA_BASE_URL}/figuras"
 
 def cargar_puntos_csv(path: Path) -> list[list[float]]:
     puntos = []
@@ -136,6 +140,59 @@ async def websocket_transform(websocket: WebSocket):
         try:
             while True:
                 data = await websocket.receive_json()
+
+                # 1. Relevo de deformación topológica (Morph Dona -> Taza)
+                if "morph" in data and isinstance(data["morph"], dict):
+                    try:
+                        t_val = float(data["morph"].get("t", 0.0))
+                        res_val = int(data["morph"].get("resolucion", 50))
+                    except (ValueError, TypeError):
+                        await websocket.send_json({"status": "error", "detail": "parámetros de morph inválidos"})
+                        continue
+                    if not math.isfinite(t_val) or not (0.0 <= t_val <= 1.0) or not (4 <= res_val <= 100):
+                        await websocket.send_json({"status": "error", "detail": "parámetros de morph fuera de rango"})
+                        continue
+                    resp_morph = await client.post(
+                        CALCULADORA_MORPH_URL,
+                        json={"t": t_val, "resolucion": res_val},
+                        timeout=5.0,
+                    )
+                    if resp_morph.status_code == 200:
+                        body = resp_morph.json()
+                        await websocket.send_json({
+                            "status": "ok",
+                            "morph": {
+                                "t": t_val,
+                                "total_puntos": body.get("total_puntos", 0),
+                                "vertices": body.get("vertices", []),
+                            }
+                        })
+                    else:
+                        await websocket.send_json({"status": "error", "detail": "error calculando morph"})
+                    continue
+
+                # 2. Relevo de guardado de figura con nombre
+                if "guardar" in data and isinstance(data["guardar"], dict):
+                    nombre = str(data["guardar"].get("nombre", "")).strip()
+                    try:
+                        t_val = float(data["guardar"].get("t", 0.0))
+                        res_val = int(data["guardar"].get("resolucion", 50))
+                    except (ValueError, TypeError):
+                        await websocket.send_json({"status": "error", "detail": "parámetros inválidos"})
+                        continue
+                    if not nombre or len(nombre) > 60:
+                        await websocket.send_json({"status": "error", "detail": "nombre de figura inválido"})
+                        continue
+                    resp_save = await client.post(
+                        CALCULADORA_FIGURAS_URL,
+                        json={"nombre": nombre, "t": t_val, "resolucion": res_val},
+                        timeout=5.0,
+                    )
+                    if resp_save.status_code == 200:
+                        await websocket.send_json({"status": "ok", "guardada": resp_save.json()})
+                    else:
+                        await websocket.send_json({"status": "error", "detail": "no se pudo guardar la figura"})
+                    continue
                 
                 try:
                     tx = float(data.get("tx", 0.0))

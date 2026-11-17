@@ -214,7 +214,7 @@
 
         .figure-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 0.5rem;
             background: rgba(15, 17, 26, 0.7);
             padding: 5px;
@@ -343,6 +343,26 @@
                     <span class="fig-icon">🔺</span>
                     <span class="fig-label">Pirámide</span>
                 </button>
+                <button class="figure-btn" data-figura="morph" id="btn-fig-morph" title="Morph Dona a Taza">
+                    <span class="fig-icon">☕</span>
+                    <span class="fig-label">Dona→Taza</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group" id="morph-panel" style="display: none;">
+            <div class="control-section-title">Morph Topológico (Dona → Taza)</div>
+            <div class="slider-wrapper">
+                <div class="slider-header">
+                    <span id="figura-etiqueta">Dona</span>
+                    <span class="slider-value" id="val-morph-t">0%</span>
+                </div>
+                <input type="range" id="morph-t" min="0" max="1" step="0.02" value="0">
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                <input type="text" id="figura-nombre" maxlength="60" placeholder="Nombre de la figura..."
+                    style="flex: 1; background: rgba(15,17,26,0.8); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; padding: 0.45rem 0.6rem; font-size: 0.8rem;">
+                <button class="reset-btn" id="figura-guardar" style="margin-top: 0; padding: 0.45rem 0.75rem; font-size: 0.8rem;">Guardar</button>
             </div>
         </div>
 
@@ -416,11 +436,26 @@
         const figureConfigs = {
             dona: { name: 'Dona (Toroide)', icon: '🍩', color: 0x00ffaa, hex: '#00ffaa', size: 0.15 },
             esfera: { name: 'Esfera', icon: '🔮', color: 0x00d4ff, hex: '#00d4ff', size: 0.14 },
-            piramide: { name: 'Pirámide', icon: '🔺', color: 0xffb700, hex: '#ffb700', size: 0.16 }
+            piramide: { name: 'Pirámide', icon: '🔺', color: 0xffb700, hex: '#ffb700', size: 0.16 },
+            morph: { name: 'Morph Dona → Taza', icon: '☕', color: 0x00ffaa, hex: '#00ffaa', size: 0.15 }
         };
         let currentFigure = 'dona';
+        let morphSavedName = null;
+
+        function requestMorphVertices(tVal) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({ morph: { t: parseFloat(tVal), resolucion: 60 } }));
+        }
 
         async function fetchModelData(figura = 'dona') {
+            const morphPanel = document.getElementById('morph-panel');
+            if (figura === 'morph') {
+                if (morphPanel) morphPanel.style.display = 'flex';
+                const tVal = parseFloat(document.getElementById('morph-t').value || '0');
+                requestMorphVertices(tVal);
+                return;
+            }
+            if (morphPanel) morphPanel.style.display = 'none';
             const config = figureConfigs[figura] || figureConfigs['dona'];
             const modelStatus = document.getElementById('model-status');
 
@@ -522,6 +557,29 @@
 
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
+                if (data.morph && data.morph.vertices) {
+                    createPointsMesh(data.morph.vertices, 'morph');
+                    const pct = Math.round(data.morph.t * 100);
+                    document.getElementById('val-morph-t').innerText = `${pct}%`;
+                    const etiqueta = document.getElementById('figura-etiqueta');
+                    if (morphSavedName) {
+                        etiqueta.innerText = morphSavedName;
+                    } else if (data.morph.t === 0) {
+                        etiqueta.innerText = 'Dona';
+                    } else if (data.morph.t === 1) {
+                        etiqueta.innerText = 'Taza';
+                    } else {
+                        etiqueta.innerText = `Dona → Taza (${pct}%)`;
+                    }
+                    document.getElementById('model-status').innerText = `☕ ${etiqueta.innerText}: ${data.morph.vertices.length.toLocaleString()} vértices`;
+                    return;
+                }
+                if (data.guardada && data.guardada.nombre) {
+                    morphSavedName = data.guardada.nombre;
+                    document.getElementById('figura-etiqueta').innerText = morphSavedName;
+                    document.getElementById('model-status').innerText = `☕ Guardada: ${morphSavedName}`;
+                    return;
+                }
                 if (data.matrix) {
                     // Convert Array to Matrix4 and apply it to the group
                     const m = new THREE.Matrix4();
@@ -569,6 +627,20 @@
                 valDisplay.innerText = v;
                 sendTransformData();
             });
+        });
+
+        document.getElementById('morph-t').addEventListener('input', (e) => {
+            morphSavedName = null;
+            const tVal = parseFloat(e.target.value);
+            document.getElementById('val-morph-t').innerText = `${Math.round(tVal * 100)}%`;
+            requestMorphVertices(tVal);
+        });
+
+        document.getElementById('figura-guardar').addEventListener('click', () => {
+            const nombre = document.getElementById('figura-nombre').value.trim();
+            const tVal = parseFloat(document.getElementById('morph-t').value || '0');
+            if (!nombre || !ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({ guardar: { nombre: nombre, t: tVal, resolucion: 60 } }));
         });
 
         document.getElementById('btn-reset').addEventListener('click', () => {
