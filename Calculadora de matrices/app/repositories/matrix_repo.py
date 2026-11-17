@@ -31,3 +31,34 @@ class MatrixRepository:
 
 # Instancia global (singleton para esta prueba en memoria)
 matrix_db = MatrixRepository()
+
+
+class FiguraMorphRepository:
+    def __init__(self):
+        self.figuras = {}
+        self.counter = 1
+
+    def guardar(self, data: dict) -> dict:
+        nombre = data["nombre"]
+        for fig in self.figuras.values():
+            if fig["nombre"] == nombre:
+                fig["t"] = data["t"]
+                fig["resolucion"] = data["resolucion"]
+                return fig
+
+        nueva = {
+            "id": self.counter,
+            "nombre": nombre,
+            "t": data["t"],
+            "resolucion": data["resolucion"],
+        }
+        self.figuras[self.counter] = nueva
+        self.counter += 1
+        return nueva
+
+    def listar(self) -> list:
+        return list(self.figuras.values())
+
+
+figura_db = FiguraMorphRepository()
+

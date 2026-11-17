@@ -17,3 +17,17 @@ class MatrixCreate(BaseModel):
 
 class MatrixOut(MatrixCreate):
     id: int
+
+
+class MorphParams(BaseModel):
+    t: float = Field(0.0, ge=0.0, le=1.0, description="Factor de deformación: 0.0 = Dona, 1.0 = Taza")
+    resolucion: int = Field(50, ge=4, le=100, description="Resolución por eje (genera resolucion^2 vértices)")
+
+
+class FiguraMorphCreate(MorphParams):
+    nombre: str = Field(..., min_length=1, max_length=60, description="Nombre personalizado de la figura")
+
+
+class FiguraMorphOut(FiguraMorphCreate):
+    id: int
+

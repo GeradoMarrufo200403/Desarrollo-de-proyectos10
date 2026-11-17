@@ -1,5 +1,6 @@
 ﻿from fastapi import APIRouter, HTTPException
-from app.repositories.matrix_repo import matrix_db
+from app.repositories.matrix_repo import matrix_db, figura_db
+from app.models.models import MorphParams, FiguraMorphCreate, FiguraMorphOut
 from app.services import matrix_service
 from pydantic import BaseModel
 from typing import List
@@ -113,3 +114,16 @@ def transformacion_3d(params: TransformParams):
         "matriz_renderizada": matriz_bloque,
         "matriz_tabla_markdown": tabla_md
     }
+
+
+@router.post("/morph")
+def morph_dona_taza(params: MorphParams):
+    """Calcula la malla interpolada entre la Dona (t=0) y la Taza (t=1)."""
+    vertices = matrix_service.calcular_morph(params.t, params.resolucion)
+    return {
+        "t": params.t,
+        "resolucion": params.resolucion,
+        "total_puntos": len(vertices),
+        "vertices": vertices
+    }
+

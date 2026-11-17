@@ -4,7 +4,10 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from app.api.routers import matrices, operations
-from app.api.routers.operations import TransformParams, transformacion_3d
+from app.api.routers.operations import TransformParams, transformacion_3d, morph_dona_taza
+from app.models.models import MorphParams, FiguraMorphCreate, FiguraMorphOut
+from app.repositories.matrix_repo import figura_db
+from typing import List
 
 app = FastAPI(
     title="Calculadora de Matrices API",
@@ -70,6 +73,25 @@ app.include_router(operations.router)
 def endpoint_transformaciones_matriz(params: TransformParams):
     """Calcula la matriz homogénea 4x4 M = T*Rz*Ry*Rx para n8n y clientes 3D."""
     return transformacion_3d(params)
+
+
+@app.post("/calc/morph")
+def endpoint_calc_morph(params: MorphParams):
+    """Endpoint de deformación topológica Dona -> Taza."""
+    return morph_dona_taza(params)
+
+
+@app.post("/figuras", response_model=FiguraMorphOut)
+def guardar_figura_morph(payload: FiguraMorphCreate):
+    """Guarda una figura del morph con nombre para consultarla después."""
+    return figura_db.guardar(payload.model_dump())
+
+
+@app.get("/figuras", response_model=List[FiguraMorphOut])
+def listar_figuras_morph():
+    """Lista las figuras guardadas con nombre."""
+    return figura_db.listar()
+
 
 INDEX = static_path / "index.html"
 
