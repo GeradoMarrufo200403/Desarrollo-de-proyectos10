@@ -1,0 +1,29 @@
+services:
+  calculadora:
+    build: "./Calculadora de matrices"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./Calculadora de matrices:/app"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+
+  modelador3d:
+    build: "./Modelador3D_matrices"
+    ports:
+      - "8001:8000"
+    volumes:
+      - "./Modelador3D_matrices:/app"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CALCULADORA_BASE_URL=http://calculadora:8000
+    depends_on:
+      calculadora:
+        condition: service_healthy
