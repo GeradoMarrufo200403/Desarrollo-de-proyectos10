@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP por Informe de Escaneo Checkmarx</title>
+<link
+	href="2026-10-20-ZAP-Report-/normalize/normalize.css" rel="stylesheet">
+<link
+	href="2026-10-20-ZAP-Report-/themes/original/main.css" rel="stylesheet">
+<link
+	href="2026-10-20-ZAP-Report-/themes/original/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP por Informe de Escaneo Checkmarx</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org"><img
+				src="2026-10-20-ZAP-Report-/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on mar 20 oct 2026, at 23:28:11</span>
+		</p>
+		<p>ZAP Versión: 2.17.0</p>
+		<p>
+			ZAP by <a href="https://checkmarx.com/">Checkmarx</a>
+		</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a
+						href="#about-this-report">About This Report</a>
+						<ol>
+							
+							<li><a
+								href="#report-parameters">Report Parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert Counts by Risk and Confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert Counts by Site and Risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert Counts by Alert Type</a></li>
+							<li><a
+								href="#insights">Insights</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							 
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-2-confidence-3"><span>Risk</span>=<span
+									class="risk-level">Medio</span>, <span>Confidence</span>=<span
+									class="confidence-level">Alta</span> <span>(2)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-2-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Medio</span>, <span>Confidence</span>=<span
+									class="confidence-level">Media</span> <span>(1)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-1-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Bajo</span>, <span>Confidence</span>=<span
+									class="confidence-level">Media</span> <span>(2)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-0-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Informativo</span>, <span>Confidence</span>=<span
+									class="confidence-level">Media</span> <span>(1)</span></a></li>
+							
+							
+							  
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert Types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section
+			id="about-this-report" class="about-this-report">
+			<h2>About This Report</h2>
+
+			
+
+			<section
+				id="report-parameters">
+				<h3>Report Parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">http://localhost:8001</span></li>
+						<li><span class="site">http://localhost:8000</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">Alto</span>, <span class="risk-level">Medio</span>, <span class="risk-level">Bajo</span>, <span class="risk-level">Informativo</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">Confirmado por Usuario</span>, <span class="confidence-level">Alta</span>, <span class="confidence-level">Media</span>, <span class="confidence-level">Baja</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">Confirmado por Usuario</span>, <span class="confidence-level">Alta</span>, <span class="confidence-level">Media</span>, <span class="confidence-level">Baja</span>, <span class="confidence-level">Falso positivo</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert Counts by Risk and Confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">Confirmado por Usuario</th>
+							<th scope="col">Alta</th>
+							<th scope="col">Media</th>
+							<th scope="col">Baja</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="5">Risk</th>
+							<th scope="row">Alto</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0 %)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Medio</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33,3 %)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16,7 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>3</span><br> <span class="additional-info-percentages">(50,0 %)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Bajo</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33,3 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>2</span><br> <span class="additional-info-percentages">(33,3 %)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Informativo</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16,7 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(16,7 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33,3 %)</span></td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(66,7 %)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0,0 %)</span></td>
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert Counts by Site and Risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>Alto</span><br>  <span
+									class="additional-info-percentages">(= Alto)</span>  
+							</th>
+							<th scope="col">
+								<span>Medio</span><br>   <span
+									class="additional-info-percentages">(&gt;= Medio)</span> 
+							</th>
+							<th scope="col">
+								<span>Bajo</span><br>   <span
+									class="additional-info-percentages">(&gt;= Bajo)</span> 
+							</th>
+							<th scope="col">
+								<span>Informativo</span><br>   <span
+									class="additional-info-percentages">(&gt;= Informativo)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="2">Site</th>
+							<th scope="row">http://localhost:8001</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							
+						</tr>
+						<tr>
+							
+							<th scope="row">http://localhost:8000</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(3)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(4)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(5)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert Counts by Alert Type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">Cabecera Content Security Policy (CSP) no configurada</a></th>
+							<td class="risk-level">Medio</td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(50,0 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-1">Falta de cabecera Anti-Clickjacking</a></th>
+							<td class="risk-level">Medio</td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(50,0 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-2">Sub Resource Integrity Attribute Missing</a></th>
+							<td class="risk-level">Medio</td>
+							<td><span>5</span><br> <span
+								class="additional-info-percentages">(83,3 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-3">Falta encabezado X-Content-Type-Options</a></th>
+							<td class="risk-level">Bajo</td>
+							<td><span>5</span><br> <span
+								class="additional-info-percentages">(83,3 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-4">Inclusión de archivos fuente JavaScript entre dominios</a></th>
+							<td class="risk-level">Bajo</td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33,3 %)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-5">Aplicación Web Moderna</a></th>
+							<td class="risk-level">Informativo</td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(50,0 %)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>6</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+			
+			<section
+				id="insights">
+				<h3 class="left-header">Insights</h3>
+				<table class="insights-table">
+						<caption>
+						<p>This table shows information that is likely to be very relevant to you, but which is not related to vulnerabilities, or potentially even related to the application in question.</p>
+					</caption>
+					<thead>
+					<tr>
+						<th scope="col">Level</th>
+						<th scope="col">Reason</th>
+						<th scope="col">Site</th>
+						<th scope="col">Description</th>
+						<th scope="col">Statistic</th>
+					</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+						<td class="risk-2">
+							<div>Medium</div>
+						</td>
+						<td>
+							<div>Exceeded Low</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>Percentage of memory used</div>
+						</td>
+						<td align="center">
+							<div>81   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-1">
+							<div>Low</div>
+						</td>
+						<td>
+							<div>Warning</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>ZAP warnings logged - see the zap.log file for details</div>
+						</td>
+						<td align="center">
+							<div>2   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>18 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 3xx</div>
+						</td>
+						<td align="center">
+							<div>40 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 4xx</div>
+						</td>
+						<td align="center">
+							<div>40 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/javascript</div>
+						</td>
+						<td align="center">
+							<div>20 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>40 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/css</div>
+						</td>
+						<td align="center">
+							<div>20 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/html</div>
+						</td>
+						<td align="center">
+							<div>20 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8000</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>5   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>16 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 4xx</div>
+						</td>
+						<td align="center">
+							<div>83 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>66 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/html</div>
+						</td>
+						<td align="center">
+							<div>33 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Info</div>
+						</td>
+						<td>
+							<div>Informational</div>
+						</td>
+						<td>
+							<div>http://localhost:8001</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>3   </div>
+						</td>
+						</tr>
+					
+					</tbody>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				 
+				
+				
+				<li id="alerts--risk-2-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medio</span>, <span>Confidence</span>=<span
+							class="confidence-level">Alta</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8000</span> <span>(2)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">Cabecera Content Security Policy (CSP) no configurada</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8000</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>La Política de seguridad de contenido (CSP) es una capa adicional de seguridad que ayuda a detectar y mitigar ciertos tipos de ataques, incluidos Cross Site Scripting (XSS) y ataques de inyección de datos. Estos ataques se utilizan para todo, desde el robo de datos hasta la desfiguración del sitio o la distribución de malware. CSP proporciona un conjunto de encabezados HTTP estándar que permiten a los propietarios de sitios web declarar fuentes de contenido aprobadas que los navegadores deberían poder cargar en esa página; los tipos cubiertos son JavaScript, CSS, marcos HTML, fuentes, imágenes y objetos incrustados como applets de Java, ActiveX, archivos de audio y video.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (228 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8000 HTTP/1.1
+host: localhost:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (259 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:23:09 GMT
+server: uvicorn
+content-type: text/html; charset=utf-8
+accept-ranges: bytes
+content-length: 3988
+last-modified: Tue, 22 Sep 2026 23:02:32 GMT
+etag: &quot;17de69cf5ef747611a66cf7f454fb324&quot;
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3988 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Gestor de Matrices - Estilo Excel&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/styles.css&quot;&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!-- Notificaciones --&gt;
+        &lt;div id=&quot;alert-banner&quot; class=&quot;alert hidden&quot;&gt;
+            &lt;span id=&quot;alert-message&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid-layout&quot;&gt;
+            &lt;!-- Tarjeta 1: Crear Matriz --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;1. Crear Matriz&lt;/h2&gt;
+                &lt;div class=&quot;form-group row&quot;&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Filas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;rows&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Columnas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;cols&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;generarInputsMatriz()&quot;&gt;Configurar&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;matrix-inputs&quot; class=&quot;matrix-inputs&quot;&gt;&lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;crearMatriz()&quot;&gt;Guardar Matriz&lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 2: Sumar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;2. Sumar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;sumarMatrices()&quot;&gt;Sumar&lt;/button&gt;
+                &lt;div id=&quot;sum-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 3: Multiplicar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;3. Multiplicar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;multiplicarMatrices()&quot;&gt;Multiplicar&lt;/button&gt;
+                &lt;div id=&quot;mul-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 4: Calcular Determinante (y Transpuesta) --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;4. Calcular Determinante y Transpuesta&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz:&lt;/label&gt;
+                    &lt;select id=&quot;unit-m&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;row-buttons&quot;&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularDeterminante()&quot;&gt;Calcular |A|&lt;/button&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularTranspuesta()&quot;&gt;Ver Transpuesta&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;det-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+                &lt;div id=&quot;trans-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 5: Matrices Almacenadas --&gt;
+            &lt;div class=&quot;card card-wide&quot;&gt;
+                &lt;h2&gt;5. Matrices Almacenadas&lt;/h2&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;cargarMatrices()&quot;&gt;Refrescar Lista&lt;/button&gt;
+                &lt;div id=&quot;matrices-list&quot; class=&quot;matrices-list&quot;&gt;
+                    &lt;!-- Las matrices se renderizan aquí dinámicamente --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;/static/app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Asegúrese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. esté configurado para establecer la cabecera Content-Security-Policy.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-2">Sub Resource Integrity Attribute Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8000</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/345.html">CWE-345</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (228 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8000 HTTP/1.1
+host: localhost:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (259 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:23:09 GMT
+server: uvicorn
+content-type: text/html; charset=utf-8
+accept-ranges: bytes
+content-length: 3988
+last-modified: Tue, 22 Sep 2026 23:02:32 GMT
+etag: &quot;17de69cf5ef747611a66cf7f454fb324&quot;
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3988 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Gestor de Matrices - Estilo Excel&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/styles.css&quot;&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!-- Notificaciones --&gt;
+        &lt;div id=&quot;alert-banner&quot; class=&quot;alert hidden&quot;&gt;
+            &lt;span id=&quot;alert-message&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid-layout&quot;&gt;
+            &lt;!-- Tarjeta 1: Crear Matriz --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;1. Crear Matriz&lt;/h2&gt;
+                &lt;div class=&quot;form-group row&quot;&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Filas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;rows&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Columnas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;cols&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;generarInputsMatriz()&quot;&gt;Configurar&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;matrix-inputs&quot; class=&quot;matrix-inputs&quot;&gt;&lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;crearMatriz()&quot;&gt;Guardar Matriz&lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 2: Sumar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;2. Sumar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;sumarMatrices()&quot;&gt;Sumar&lt;/button&gt;
+                &lt;div id=&quot;sum-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 3: Multiplicar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;3. Multiplicar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;multiplicarMatrices()&quot;&gt;Multiplicar&lt;/button&gt;
+                &lt;div id=&quot;mul-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 4: Calcular Determinante (y Transpuesta) --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;4. Calcular Determinante y Transpuesta&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz:&lt;/label&gt;
+                    &lt;select id=&quot;unit-m&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;row-buttons&quot;&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularDeterminante()&quot;&gt;Calcular |A|&lt;/button&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularTranspuesta()&quot;&gt;Ver Transpuesta&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;det-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+                &lt;div id=&quot;trans-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 5: Matrices Almacenadas --&gt;
+            &lt;div class=&quot;card card-wide&quot;&gt;
+                &lt;h2&gt;5. Matrices Almacenadas&lt;/h2&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;cargarMatrices()&quot;&gt;Refrescar Lista&lt;/button&gt;
+                &lt;div id=&quot;matrices-list&quot; class=&quot;matrices-list&quot;&gt;
+                    &lt;!-- Las matrices se renderizan aquí dinámicamente --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;/static/app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Provide a valid integrity attribute to the tag.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-2-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medio</span>, <span>Confidence</span>=<span
+							class="confidence-level">Media</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-1">Falta de cabecera Anti-Clickjacking</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8000</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span> 
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/11-Client-side_Testing/09-Testing_for_Clickjacking">WSTG-v42-CLNT-09</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>La respuesta no protege contra ataques de &quot;ClickJacking&quot;. Debes incluir Content-Security-Policy con la directiva &quot;frame-ancestors&quot; o X-Frame-Options.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (228 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8000 HTTP/1.1
+host: localhost:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (259 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:23:09 GMT
+server: uvicorn
+content-type: text/html; charset=utf-8
+accept-ranges: bytes
+content-length: 3988
+last-modified: Tue, 22 Sep 2026 23:02:32 GMT
+etag: &quot;17de69cf5ef747611a66cf7f454fb324&quot;
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3988 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Gestor de Matrices - Estilo Excel&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/styles.css&quot;&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!-- Notificaciones --&gt;
+        &lt;div id=&quot;alert-banner&quot; class=&quot;alert hidden&quot;&gt;
+            &lt;span id=&quot;alert-message&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid-layout&quot;&gt;
+            &lt;!-- Tarjeta 1: Crear Matriz --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;1. Crear Matriz&lt;/h2&gt;
+                &lt;div class=&quot;form-group row&quot;&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Filas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;rows&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Columnas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;cols&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;generarInputsMatriz()&quot;&gt;Configurar&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;matrix-inputs&quot; class=&quot;matrix-inputs&quot;&gt;&lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;crearMatriz()&quot;&gt;Guardar Matriz&lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 2: Sumar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;2. Sumar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;sumarMatrices()&quot;&gt;Sumar&lt;/button&gt;
+                &lt;div id=&quot;sum-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 3: Multiplicar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;3. Multiplicar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;multiplicarMatrices()&quot;&gt;Multiplicar&lt;/button&gt;
+                &lt;div id=&quot;mul-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 4: Calcular Determinante (y Transpuesta) --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;4. Calcular Determinante y Transpuesta&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz:&lt;/label&gt;
+                    &lt;select id=&quot;unit-m&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;row-buttons&quot;&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularDeterminante()&quot;&gt;Calcular |A|&lt;/button&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularTranspuesta()&quot;&gt;Ver Transpuesta&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;det-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+                &lt;div id=&quot;trans-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 5: Matrices Almacenadas --&gt;
+            &lt;div class=&quot;card card-wide&quot;&gt;
+                &lt;h2&gt;5. Matrices Almacenadas&lt;/h2&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;cargarMatrices()&quot;&gt;Refrescar Lista&lt;/button&gt;
+                &lt;div id=&quot;matrices-list&quot; class=&quot;matrices-list&quot;&gt;
+                    &lt;!-- Las matrices se renderizan aquí dinámicamente --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;/static/app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-frame-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Los navegadores web modernos admiten las cabeceras HTTP Content-Security-Policy y X-Frame-Options. Asegúrese de que una de ellas está configurada en todas las páginas web devueltas por su sitio/aplicación.</p>
+
+<p>Si espera que la página esté enmarcada solo por páginas en su servidor (por ejemplo, si forma parte de un FRAMESET), utilice SAMEORIGIN; de lo contrario, si no espera que la página esté enmarcada, utilice DENY. Alternativamente, considere implementar la directiva &quot;frame-ancestors&quot; de la Política de Seguridad de Contenidos.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Bajo</span>, <span>Confidence</span>=<span
+							class="confidence-level">Media</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8001</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-4">Inclusión de archivos fuente JavaScript entre dominios</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8001/view</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/">OWASP_2021_A08</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/829.html">CWE-829</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>La página incluye uno o más archivos de script de un dominio de terceros.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (233 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8001/view HTTP/1.1
+host: localhost:8001
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (150 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:24:17 GMT
+server: uvicorn
+content-length: 22525
+content-type: text/html; charset=utf-8
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (22525 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;3D Matrix transformation - Premium Engine&lt;/title&gt;
+    &lt;!-- Google Fonts: Inter --&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;style&gt;
+        :root {
+            --bg-dark: #0f111a;
+            --panel-bg: rgba(20, 24, 39, 0.65);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-glow: rgba(0, 255, 170, 0.4);
+            --text-main: #f0f4f8;
+            --text-muted: #8c9baf;
+            --slider-track: #2a2f4c;
+            --slider-thumb: #00ffaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: &#39;Inter&#39;, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Control Panel */
+        .control-panel {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 320px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2rem;
+            z-index: 10;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-panel::before {
+            content: &#39;&#39;;
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(135deg, rgba(0, 255, 170, 0.2), rgba(0, 162, 255, 0.2));
+            z-index: -1;
+            border-radius: 26px;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+
+        .header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #ffffff, #00ffaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ff3366;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff3366;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .status-dot.connected {
+            background-color: #00ffaa;
+            box-shadow: 0 0 8px #00ffaa;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .control-section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .slider-value {
+            color: var(--slider-thumb);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Modern Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+            height: 4px;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--slider-track);
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--slider-thumb);
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -5px;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: transform 0.1s;
+        }
+
+        input[type=range]:active::-webkit-slider-thumb {
+            transform: scale(1.3);
+        }
+
+        .reset-btn {
+            background: rgba(0, 255, 170, 0.1);
+            color: var(--slider-thumb);
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .reset-btn:hover {
+            background: rgba(0, 255, 170, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .reset-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Selector de Figuras 3D */
+        .figure-selector-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            background: rgba(15, 17, 26, 0.7);
+            padding: 5px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .figure-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 0.65rem 0.25rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.75rem;
+            font-weight: 500;
+            user-select: none;
+        }
+
+        .figure-btn .fig-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            transition: transform 0.25s ease;
+        }
+
+        .figure-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .figure-btn:hover .fig-icon {
+            transform: scale(1.15);
+        }
+
+        .figure-btn.active {
+            background: rgba(0, 255, 170, 0.15);
+            border-color: rgba(0, 255, 170, 0.5);
+            color: #00ffaa;
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.25);
+            font-weight: 600;
+        }
+
+        .figure-btn.active[data-figura=&quot;esfera&quot;] {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+            color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.25);
+        }
+
+        .figure-btn.active[data-figura=&quot;piramide&quot;] {
+            background: rgba(255, 183, 0, 0.15);
+            border-color: rgba(255, 183, 0, 0.5);
+            color: #ffb700;
+            box-shadow: 0 0 15px rgba(255, 183, 0, 0.25);
+        }
+
+        .figure-btn.active .fig-icon {
+            transform: scale(1.2);
+        }
+
+        /* Loading overlay */
+        #loading {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 255, 170, 0.2);
+            border-top-color: var(--slider-thumb);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;div id=&quot;loading&quot;&gt;
+        &lt;div class=&quot;spinner&quot;&gt;&lt;/div&gt;
+        &lt;p style=&quot;color: var(--text-muted); font-size: 0.9rem;&quot;&gt;Cargando motor 3D y modelo...&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;canvas-container&quot;&gt;&lt;/div&gt;
+
+    &lt;div class=&quot;control-panel&quot;&gt;
+        &lt;div class=&quot;header&quot;&gt;
+            &lt;h1&gt;Matrix API Transform&lt;/h1&gt;
+            &lt;div class=&quot;status&quot;&gt;
+                &lt;div class=&quot;status-dot&quot; id=&quot;ws-status&quot;&gt;&lt;/div&gt;
+                &lt;span id=&quot;ws-text&quot;&gt;Conectando WebSocket...&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;status&quot; style=&quot;margin-top: 4px;&quot;&gt;
+                &lt;span id=&quot;model-status&quot; style=&quot;color: var(--text-muted);&quot;&gt;Esperando datos de modelo...&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;control-group figure-selector-container&quot;&gt;
+            &lt;div class=&quot;control-section-title&quot;&gt;Figura 3D Activa&lt;/div&gt;
+            &lt;div class=&quot;figure-grid&quot; id=&quot;figure-grid&quot;&gt;
+                &lt;button class=&quot;figure-btn active&quot; data-figura=&quot;dona&quot; id=&quot;btn-fig-dona&quot; title=&quot;Toroide / Dona&quot;&gt;
+                    &lt;span class=&quot;fig-icon&quot;&gt;🍩&lt;/span&gt;
+                    &lt;span class=&quot;fig-label&quot;&gt;Dona&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button class=&quot;figure-btn&quot; data-figura=&quot;esfera&quot; id=&quot;btn-fig-esfera&quot; title=&quot;Esfera 3D&quot;&gt;
+                    &lt;span class=&quot;fig-icon&quot;&gt;🔮&lt;/span&gt;
+                    &lt;span class=&quot;fig-label&quot;&gt;Esfera&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button class=&quot;figure-btn&quot; data-figura=&quot;piramide&quot; id=&quot;btn-fig-piramide&quot; title=&quot;Pirámide 3D&quot;&gt;
+                    &lt;span class=&quot;fig-icon&quot;&gt;🔺&lt;/span&gt;
+                    &lt;span class=&quot;fig-label&quot;&gt;Pirámide&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;control-group&quot;&gt;
+            &lt;div class=&quot;control-section-title&quot;&gt;Traslación&lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje X&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-tx&quot;&gt;0.00&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;tx&quot; min=&quot;-10&quot; max=&quot;10&quot; step=&quot;0.1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje Y&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-ty&quot;&gt;0.00&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;ty&quot; min=&quot;-10&quot; max=&quot;10&quot; step=&quot;0.1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje Z&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-tz&quot;&gt;0.00&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;tz&quot; min=&quot;-10&quot; max=&quot;10&quot; step=&quot;0.1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;control-group&quot;&gt;
+            &lt;div class=&quot;control-section-title&quot;&gt;Rotación (Grados)&lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje X&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-rx&quot;&gt;0°&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;rx&quot; min=&quot;-180&quot; max=&quot;180&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje Y&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-ry&quot;&gt;0°&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;ry&quot; min=&quot;-180&quot; max=&quot;180&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;slider-wrapper&quot;&gt;
+                &lt;div class=&quot;slider-header&quot;&gt;&lt;span&gt;Eje Z&lt;/span&gt;&lt;span class=&quot;slider-value&quot; id=&quot;val-rz&quot;&gt;0°&lt;/span&gt;&lt;/div&gt;
+                &lt;input type=&quot;range&quot; id=&quot;rz&quot; min=&quot;-180&quot; max=&quot;180&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;button class=&quot;reset-btn&quot; id=&quot;btn-reset&quot;&gt;Resetear Transformaciones&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Three.js (using r128 for general stability) --&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js&quot;&gt;&lt;/script&gt;
+
+    &lt;script&gt;
+        // --- 1. SETUP THREE.JS ---
+        const container = document.getElementById(&#39;canvas-container&#39;);
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0f111a, 0.02);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(5, 5, 25); // Moved back to see full 10 radius torus
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // Grid y Axes ocultos por solicitud del usuario para dejar la figura flotando en el vacío.
+
+        // Object Placeholder
+        let modelGroup = new THREE.Group();
+        modelGroup.matrixAutoUpdate = false;
+        scene.add(modelGroup);
+        
+        let pointsMesh = null;
+
+        // --- 2. MULTI-MODEL CONFIG &amp; FETCH LOGIC ---
+        const figureConfigs = {
+            dona: { name: &#39;Dona (Toroide)&#39;, icon: &#39;🍩&#39;, color: 0x00ffaa, hex: &#39;#00ffaa&#39;, size: 0.15 },
+            esfera: { name: &#39;Esfera&#39;, icon: &#39;🔮&#39;, color: 0x00d4ff, hex: &#39;#00d4ff&#39;, size: 0.14 },
+            piramide: { name: &#39;Pirámide&#39;, icon: &#39;🔺&#39;, color: 0xffb700, hex: &#39;#ffb700&#39;, size: 0.16 }
+        };
+        let currentFigure = &#39;dona&#39;;
+
+        async function fetchModelData(figura = &#39;dona&#39;) {
+            const config = figureConfigs[figura] || figureConfigs[&#39;dona&#39;];
+            const modelStatus = document.getElementById(&#39;model-status&#39;);
+
+            try {
+                modelStatus.innerText = `Cargando ${config.name}...`;
+                modelStatus.style.color = &#39;var(--text-muted)&#39;;
+
+                const response = await fetch(`/api/modelo-csv?figura=${encodeURIComponent(figura)}`);
+                if(!response.ok) throw new Error(&#39;API Response Error&#39;);
+                const data = await response.json();
+
+                if (data.vertices &amp;&amp; data.vertices.length &gt; 0) {
+                    modelStatus.innerText = `${config.icon} ${config.name}: ${data.total_puntos.toLocaleString()} vértices`;
+                    modelStatus.style.color = config.hex;
+                    createPointsMesh(data.vertices, figura);
+                } else {
+                    modelStatus.innerText = `No se encontraron vértices para ${config.name}`;
+                    modelStatus.style.color = &#39;#ffaa00&#39;;
+                }
+            } catch (err) {
+                console.error(&quot;Error fetching points:&quot;, err);
+                modelStatus.innerText = &quot;Error cargando figura.&quot;;
+                modelStatus.style.color = &#39;#ff3366&#39;;
+            }
+
+            // Hide loading overlay if visible
+            const loadingEl = document.getElementById(&#39;loading&#39;);
+            if (loadingEl &amp;&amp; loadingEl.style.display !== &#39;none&#39;) {
+                loadingEl.style.opacity = &#39;0&#39;;
+                setTimeout(() =&gt; loadingEl.style.display = &#39;none&#39;, 500);
+            }
+        }
+
+        function createPointsMesh(verticesArray, figura = &#39;dona&#39;) {
+            if (pointsMesh) {
+                modelGroup.remove(pointsMesh);
+                if (pointsMesh.geometry) pointsMesh.geometry.dispose();
+                if (pointsMesh.material) pointsMesh.material.dispose();
+            }
+
+            const config = figureConfigs[figura] || figureConfigs[&#39;dona&#39;];
+            const geometry = new THREE.BufferGeometry();
+            const vertices = new Float32Array(verticesArray.length * 3);
+            
+            for(let i=0; i &lt; verticesArray.length; i++) {
+                vertices[i*3] = verticesArray[i][0];
+                vertices[i*3+1] = verticesArray[i][1];
+                vertices[i*3+2] = verticesArray[i][2];
+            }
+
+            geometry.setAttribute(&#39;position&#39;, new THREE.BufferAttribute(vertices, 3));
+            
+            // Material styled to look like glowing data points with figure-specific neon glow
+            const material = new THREE.PointsMaterial({ 
+                color: config.color, 
+                size: config.size,
+                transparent: true,
+                opacity: 0.85,
+                blending: THREE.AdditiveBlending
+            });
+            
+            pointsMesh = new THREE.Points(geometry, material);
+            modelGroup.add(pointsMesh);
+        }
+
+        // Setup selector de figuras interactivo
+        document.querySelectorAll(&#39;.figure-btn&#39;).forEach(btn =&gt; {
+            btn.addEventListener(&#39;click&#39;, () =&gt; {
+                const targetFig = btn.dataset.figura;
+                if (targetFig === currentFigure) return;
+
+                document.querySelectorAll(&#39;.figure-btn&#39;).forEach(b =&gt; b.classList.remove(&#39;active&#39;));
+                btn.classList.add(&#39;active&#39;);
+
+                currentFigure = targetFig;
+                fetchModelData(currentFigure);
+            });
+        });
+
+        // Carga inicial
+        fetchModelData(currentFigure);
+
+        // --- 3. WEBSOCKET LOGIC ---
+        let ws;
+        const wsStatusDot = document.getElementById(&#39;ws-status&#39;);
+        const wsText = document.getElementById(&#39;ws-text&#39;);
+
+        function connectWebSocket() {
+            const protocol = window.location.protocol === &#39;https:&#39; ? &#39;wss:&#39; : &#39;ws:&#39;;
+            const wsUrl = `${protocol}//${window.location.host}/ws/transform`;
+            
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () =&gt; {
+                wsStatusDot.classList.add(&#39;connected&#39;);
+                wsText.innerText = &quot;Conectado a API Transform&quot;;
+                sendTransformData(); // Send initial state
+            };
+
+            ws.onmessage = (event) =&gt; {
+                const data = JSON.parse(event.data);
+                if (data.matrix) {
+                    // Convert Array to Matrix4 and apply it to the group
+                    const m = new THREE.Matrix4();
+                    m.fromArray(data.matrix); // Array must be 16 floats in Column-Major order
+                    modelGroup.matrix.copy(m);
+                }
+            };
+
+            ws.onclose = () =&gt; {
+                wsStatusDot.classList.remove(&#39;connected&#39;);
+                wsText.innerText = &quot;Desconectado. Reconectando...&quot;;
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            ws.onerror = (err) =&gt; {
+                console.error(&quot;WS Error:&quot;, err);
+            };
+        }
+
+        connectWebSocket();
+
+        // --- 4. UI CONTROLS ---
+        const sliders = [&#39;tx&#39;, &#39;ty&#39;, &#39;tz&#39;, &#39;rx&#39;, &#39;ry&#39;, &#39;rz&#39;];
+        
+        function sendTransformData() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+
+            const payload = {};
+            sliders.forEach(id =&gt; {
+                payload[id] = parseFloat(document.getElementById(id).value);
+            });
+            
+            ws.send(JSON.stringify(payload));
+        }
+
+        sliders.forEach(id =&gt; {
+            const input = document.getElementById(id);
+            const valDisplay = document.getElementById(`val-${id}`);
+            
+            input.addEventListener(&#39;input&#39;, (e) =&gt; {
+                let v = e.target.value;
+                if (id.startsWith(&#39;r&#39;)) v += &#39;°&#39;;
+                else v = parseFloat(v).toFixed(2);
+                
+                valDisplay.innerText = v;
+                sendTransformData();
+            });
+        });
+
+        document.getElementById(&#39;btn-reset&#39;).addEventListener(&#39;click&#39;, () =&gt; {
+            sliders.forEach(id =&gt; {
+                const el = document.getElementById(id);
+                el.value = 0;
+                document.getElementById(`val-${id}`).innerText = id.startsWith(&#39;r&#39;) ? &#39;0°&#39; : &#39;0.00&#39;;
+            });
+            sendTransformData();
+            
+            // Reset orbit controls
+            controls.reset();
+            camera.position.set(5, 5, 25);
+        });
+
+
+        // --- 5. RENDER LOOP ---
+        let autoAngle = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Movimiento automático de la figura
+            if (ws &amp;&amp; ws.readyState === WebSocket.OPEN) {
+                autoAngle += 1; // Velocidad de rotación
+                
+                // Calculamos oscilación y rotación continua
+                const newTx = Math.sin(autoAngle * 0.02) * 3; 
+                
+                let normRx = autoAngle % 360;
+                if (normRx &gt; 180) normRx -= 360;
+                
+                let normRy = (autoAngle * 0.6) % 360;
+                if (normRy &gt; 180) normRy -= 360;
+                
+                // Movemos los sliders mágicamente (Glassmorphism animado)
+                document.getElementById(&#39;tx&#39;).value = newTx;
+                document.getElementById(&#39;val-tx&#39;).innerText = newTx.toFixed(2);
+                
+                document.getElementById(&#39;rx&#39;).value = normRx;
+                document.getElementById(&#39;val-rx&#39;).innerText = normRx.toFixed(0) + &#39;°&#39;;
+                
+                document.getElementById(&#39;ry&#39;).value = normRy;
+                document.getElementById(&#39;val-ry&#39;).innerText = normRy.toFixed(0) + &#39;°&#39;;
+                
+                sendTransformData();
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Resize
+        window.addEventListener(&#39;resize&#39;, () =&gt; {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;&gt;&lt;/script&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Asegúrese de que los archivos fuente JavaScript se cargan solo desde fuentes de confianza, y que las fuentes no pueden ser controladas por los usuarios finales de la aplicación.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-3">Falta encabezado X-Content-Type-Options</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8000/static/app.js</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>La cabecera Anti-MIME-Sniffing X-Content-Type-Options no se ha establecido en &#39;nosniff&#39;. Esto permite que las versiones anteriores de Internet Explorer y Chrome realicen MIME-sniffing en el cuerpo de la respuesta, lo que puede provocar que el cuerpo dé la respuesta se interprete y se muestre como un tipo de contenido distinto del tipo de contenido declarado. Las versiones actuales (principios de 2014) y heredadas de Firefox utilizarán el tipo de contenido declarado (si se establece uno), en lugar de realizar MIME-sniffing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>Este problema aún se aplica a las páginas de tipo error (401, 403, 500, etc.), ya que esas páginas a menudo se ven afectadas por problemas de inyección, en cuyo caso aún existe la preocupación de que los navegadores husmeen las páginas lejos de su tipo de contenido real.</p>
+
+<p>En el umbral «Alto» esta regla de análisis no alertará sobre respuestas de error del cliente o servidor.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (274 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8000/static/app.js HTTP/1.1
+host: localhost:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: http://localhost:8000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (257 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:23:09 GMT
+server: uvicorn
+content-type: application/javascript
+accept-ranges: bytes
+content-length: 9259
+last-modified: Tue, 20 Oct 2026 22:33:04 GMT
+etag: &quot;099c8e12d6e341ad4996bac30e51d57a&quot;
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (9259 bytes)</summary>
+				
+				<pre><code>﻿const API_URL = &quot;http://localhost:8000&quot;;
+
+let matricesCache = [];
+
+function getMatrixName(id) {
+    const num = parseInt(id);
+    if (isNaN(num) || num &lt; 1) return &quot;?&quot;;
+    return String.fromCharCode(64 + num); // 1-&gt;A, 2-&gt;B, etc.
+}
+
+function showAlert(message) {
+    const banner = document.getElementById(&quot;alert-banner&quot;);
+    const msg = document.getElementById(&quot;alert-message&quot;);
+    msg.textContent = message;
+    banner.classList.remove(&quot;hidden&quot;);
+    setTimeout(() =&gt; banner.classList.add(&quot;hidden&quot;), 3000);
+}
+
+function generarInputsMatriz() {
+    const rows = parseInt(document.getElementById(&quot;rows&quot;).value);
+    const cols = parseInt(document.getElementById(&quot;cols&quot;).value);
+    const container = document.getElementById(&quot;matrix-inputs&quot;);
+    container.innerHTML = &quot;&quot;;
+
+    for (let i = 0; i &lt; rows; i++) {
+        const rowDiv = document.createElement(&quot;div&quot;);
+        rowDiv.className = &quot;matrix-row&quot;;
+        for (let j = 0; j &lt; cols; j++) {
+            const input = document.createElement(&quot;input&quot;);
+            input.type = &quot;number&quot;;
+            input.value = &quot;0&quot;;
+            input.step = &quot;any&quot;;
+            input.dataset.row = i;
+            input.dataset.col = j;
+            rowDiv.appendChild(input);
+        }
+        container.appendChild(rowDiv);
+    }
+}
+
+async function crearMatriz() {
+    const inputs = document.querySelectorAll(&quot;#matrix-inputs input&quot;);
+    if (inputs.length === 0) {
+        alert(&quot;Primero configura la matriz&quot;);
+        return;
+    }
+    
+    const rows = parseInt(document.getElementById(&quot;rows&quot;).value);
+    const cols = parseInt(document.getElementById(&quot;cols&quot;).value);
+    
+    let datos = Array.from({length: rows}, () =&gt; Array(cols).fill(0));
+    
+    inputs.forEach(input =&gt; {
+        const r = parseInt(input.dataset.row);
+        const c = parseInt(input.dataset.col);
+        datos[r][c] = parseFloat(input.value);
+    });
+
+    try {
+        const res = await fetch(`${API_URL}/matrices`, {
+            method: &quot;POST&quot;,
+            headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+            body: JSON.stringify({ datos })
+        });
+        
+        if (res.ok) {
+            const data = await res.json();
+            showAlert(`Matriz &#39;${getMatrixName(data.id)}&#39; [${rows}x${cols}] creada exitosamente.`);
+            await cargarMatrices();
+        } else {
+            const err = await res.json();
+            alert(&quot;Error: &quot; + err.detail);
+        }
+    } catch (e) {
+        console.error(e);
+        alert(&quot;Error de conexión&quot;);
+    }
+}
+
+async function cargarMatrices() {
+    try {
+        const res = await fetch(`${API_URL}/matrices`);
+        const matrices = await res.json();
+        matricesCache = matrices;
+        renderMatricesList();
+        updateSelects();
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function renderMatrixHTML(datos) {
+    let html = `&lt;div class=&quot;matrix-brackets&quot;&gt;`;
+    datos.forEach(row =&gt; {
+        html += `&lt;div class=&quot;matrix-row-display&quot;&gt;`;
+        row.forEach(val =&gt; {
+            html += `&lt;span&gt;${val}&lt;/span&gt;`;
+        });
+        html += `&lt;/div&gt;`;
+    });
+    html += `&lt;/div&gt;`;
+    return html;
+}
+
+function renderMatricesList() {
+    const list = document.getElementById(&quot;matrices-list&quot;);
+    list.innerHTML = &quot;&quot;;
+    
+    matricesCache.forEach(m =&gt; {
+        const div = document.createElement(&quot;div&quot;);
+        div.className = &quot;matrix-display&quot;;
+        
+        const rows = m.datos.length;
+        const cols = m.datos[0] ? m.datos[0].length : 0;
+        
+        const title = document.createElement(&quot;div&quot;);
+        title.className = &quot;matrix-title&quot;;
+        title.innerHTML = `ID ${m.id}: ${getMatrixName(m.id)} &lt;small style=&quot;color:#718096&quot;&gt;(${rows}x${cols})&lt;/small&gt;`;
+        
+        div.appendChild(title);
+        div.innerHTML += renderMatrixHTML(m.datos);
+        
+        list.appendChild(div);
+    });
+}
+
+function updateSelects() {
+    const selects = document.querySelectorAll(&quot;.matrix-select&quot;);
+    selects.forEach(select =&gt; {
+        const currentVal = select.value;
+        select.innerHTML = &quot;&quot;;
+        matricesCache.forEach(m =&gt; {
+            const rows = m.datos.length;
+            const cols = m.datos[0] ? m.datos[0].length : 0;
+            const option = document.createElement(&quot;option&quot;);
+            option.value = m.id;
+            option.textContent = `ID ${m.id} (${getMatrixName(m.id)}) [${rows}x${cols}]`;
+            select.appendChild(option);
+        });
+        if (currentVal &amp;&amp; Array.from(select.options).some(o =&gt; o.value === currentVal)) {
+            select.value = currentVal;
+        }
+    });
+}
+
+async function sumarMatrices() {
+    const id1 = parseInt(document.getElementById(&quot;sum-m1&quot;).value);
+    const id2 = parseInt(document.getElementById(&quot;sum-m2&quot;).value);
+    if (!id1 || !id2) return;
+
+    const box = document.getElementById(&quot;sum-result&quot;);
+    box.classList.remove(&quot;hidden&quot;);
+
+    const m1 = matricesCache.find(m =&gt; m.id === id1);
+    const m2 = matricesCache.find(m =&gt; m.id === id2);
+
+    if (m1 &amp;&amp; m2) {
+        const r1 = m1.datos.length, c1 = m1.datos[0]?.length || 0;
+        const r2 = m2.datos.length, c2 = m2.datos[0]?.length || 0;
+        if (r1 !== r2 || c1 !== c2) {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: Dimensiones incompatibles para suma.&lt;/span&gt;&lt;br&gt;&lt;br&gt;` +
+                            `&lt;small style=&quot;color:#4a5568&quot;&gt;La Matriz ${getMatrixName(id1)} es de &lt;strong&gt;${r1}x${c1}&lt;/strong&gt; y la Matriz ${getMatrixName(id2)} es de &lt;strong&gt;${r2}x${c2}&lt;/strong&gt;.&lt;br&gt;` +
+                            `Para poder sumar dos matrices, ambas deben tener exactamente la misma dimensión.&lt;/small&gt;`;
+            return;
+        }
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/operaciones/sumar?id1=${id1}&amp;id2=${id2}`, { method: &quot;POST&quot; });
+        const data = await res.json();
+        if (res.ok) {
+            box.innerHTML = `&lt;strong&gt;${getMatrixName(id1)} + ${getMatrixName(id2)} =&lt;/strong&gt;&lt;br&gt;&lt;br&gt;` + renderMatrixHTML(data.resultado);
+        } else {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: ${data.detail}&lt;/span&gt;`;
+        }
+    } catch (e) {
+        console.error(e);
+        box.innerHTML = `&lt;span style=&quot;color:#e53e3e;&quot;&gt;Error de conexión&lt;/span&gt;`;
+    }
+}
+
+async function multiplicarMatrices() {
+    const id1 = parseInt(document.getElementById(&quot;mul-m1&quot;).value);
+    const id2 = parseInt(document.getElementById(&quot;mul-m2&quot;).value);
+    if (!id1 || !id2) return;
+
+    const box = document.getElementById(&quot;mul-result&quot;);
+    box.classList.remove(&quot;hidden&quot;);
+
+    const m1 = matricesCache.find(m =&gt; m.id === id1);
+    const m2 = matricesCache.find(m =&gt; m.id === id2);
+
+    if (m1 &amp;&amp; m2) {
+        const c1 = m1.datos[0]?.length || 0;
+        const r2 = m2.datos.length;
+        if (c1 !== r2) {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: Dimensiones incompatibles para multiplicación.&lt;/span&gt;&lt;br&gt;&lt;br&gt;` +
+                            `&lt;small style=&quot;color:#4a5568&quot;&gt;Las columnas de ${getMatrixName(id1)} (${c1}) deben ser iguales a las filas de ${getMatrixName(id2)} (${r2}).&lt;/small&gt;`;
+            return;
+        }
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/operaciones/multiplicar?id1=${id1}&amp;id2=${id2}`, { method: &quot;POST&quot; });
+        const data = await res.json();
+        if (res.ok) {
+            box.innerHTML = `&lt;strong&gt;${getMatrixName(id1)} × ${getMatrixName(id2)} =&lt;/strong&gt;&lt;br&gt;&lt;br&gt;` + renderMatrixHTML(data.resultado);
+        } else {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: ${data.detail}&lt;/span&gt;`;
+        }
+    } catch (e) {
+        console.error(e);
+        box.innerHTML = `&lt;span style=&quot;color:#e53e3e;&quot;&gt;Error de conexión&lt;/span&gt;`;
+    }
+}
+
+async function calcularDeterminante() {
+    const id = parseInt(document.getElementById(&quot;unit-m&quot;).value);
+    if (!id) return;
+
+    try {
+        const res = await fetch(`${API_URL}/matrices/${id}/determinante`);
+        const data = await res.json();
+        const box = document.getElementById(&quot;det-result&quot;);
+        box.classList.remove(&quot;hidden&quot;);
+        document.getElementById(&quot;trans-result&quot;).classList.add(&quot;hidden&quot;);
+        if (res.ok) {
+            box.innerHTML = `&lt;strong&gt;det(${getMatrixName(id)}) = &lt;/strong&gt; ${data.determinante}`;
+        } else {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: ${data.detail}&lt;/span&gt;`;
+        }
+    } catch (e) { console.error(e); }
+}
+
+async function calcularTranspuesta() {
+    const id = parseInt(document.getElementById(&quot;unit-m&quot;).value);
+    if (!id) return;
+
+    try {
+        const res = await fetch(`${API_URL}/matrices/${id}/transpuesta`);
+        const data = await res.json();
+        const box = document.getElementById(&quot;trans-result&quot;);
+        box.classList.remove(&quot;hidden&quot;);
+        document.getElementById(&quot;det-result&quot;).classList.add(&quot;hidden&quot;);
+        if (res.ok) {
+            box.innerHTML = `&lt;strong&gt;${getMatrixName(id)}^T =&lt;/strong&gt;&lt;br&gt;&lt;br&gt;` + renderMatrixHTML(data.resultado);
+        } else {
+            box.innerHTML = `&lt;span style=&quot;color:#e53e3e; font-weight:600;&quot;&gt;❌ Error: ${data.detail}&lt;/span&gt;`;
+        }
+    } catch (e) { console.error(e); }
+}
+
+// Inicialización al cargar la página
+generarInputsMatriz();
+cargarMatrices();
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-content-type-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Asegúrese de que la aplicación/servidor web establece el encabezado Content-Type adecuadamente, y que establece el encabezado X-Content-Type-Options a &#39;nosniff&#39; para todas las páginas web.</p>
+
+<p>Si es posible, asegúrese de que el usuario final utiliza un navegador web moderno y compatible con los estándares que no realiza MIME-sniffing en absoluto, o que puede ser dirigido por la aplicación web/servidor web para que no realice MIME-sniffing.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informativo</span>, <span>Confidence</span>=<span
+							class="confidence-level">Media</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-5">Aplicación Web Moderna</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8000</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>La aplicación parece ser una aplicación web moderna. Si necesita explorarla automáticamente, el Ajax Spider puede ser más eficaz que el estándar.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>No se han encontrado enlaces aunque sí scripts, lo que indica que se trata de una aplicación web moderna.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (228 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8000 HTTP/1.1
+host: localhost:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (259 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Wed, 21 Oct 2026 05:23:09 GMT
+server: uvicorn
+content-type: text/html; charset=utf-8
+accept-ranges: bytes
+content-length: 3988
+last-modified: Tue, 22 Sep 2026 23:02:32 GMT
+etag: &quot;17de69cf5ef747611a66cf7f454fb324&quot;
+vary: Origin
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3988 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Gestor de Matrices - Estilo Excel&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/styles.css&quot;&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!-- Notificaciones --&gt;
+        &lt;div id=&quot;alert-banner&quot; class=&quot;alert hidden&quot;&gt;
+            &lt;span id=&quot;alert-message&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid-layout&quot;&gt;
+            &lt;!-- Tarjeta 1: Crear Matriz --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;1. Crear Matriz&lt;/h2&gt;
+                &lt;div class=&quot;form-group row&quot;&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Filas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;rows&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;label&gt;Columnas:&lt;/label&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;cols&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;2&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;generarInputsMatriz()&quot;&gt;Configurar&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;matrix-inputs&quot; class=&quot;matrix-inputs&quot;&gt;&lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;crearMatriz()&quot;&gt;Guardar Matriz&lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 2: Sumar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;2. Sumar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;sum-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;sumarMatrices()&quot;&gt;Sumar&lt;/button&gt;
+                &lt;div id=&quot;sum-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 3: Multiplicar Matrices --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;3. Multiplicar Matrices&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 1:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m1&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz 2:&lt;/label&gt;
+                    &lt;select id=&quot;mul-m2&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;multiplicarMatrices()&quot;&gt;Multiplicar&lt;/button&gt;
+                &lt;div id=&quot;mul-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 4: Calcular Determinante (y Transpuesta) --&gt;
+            &lt;div class=&quot;card&quot;&gt;
+                &lt;h2&gt;4. Calcular Determinante y Transpuesta&lt;/h2&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label&gt;Matriz:&lt;/label&gt;
+                    &lt;select id=&quot;unit-m&quot; class=&quot;matrix-select&quot;&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;row-buttons&quot;&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularDeterminante()&quot;&gt;Calcular |A|&lt;/button&gt;
+                    &lt;button class=&quot;btn&quot; onclick=&quot;calcularTranspuesta()&quot;&gt;Ver Transpuesta&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;det-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+                &lt;div id=&quot;trans-result&quot; class=&quot;result-box hidden&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Tarjeta 5: Matrices Almacenadas --&gt;
+            &lt;div class=&quot;card card-wide&quot;&gt;
+                &lt;h2&gt;5. Matrices Almacenadas&lt;/h2&gt;
+                &lt;button class=&quot;btn&quot; onclick=&quot;cargarMatrices()&quot;&gt;Refrescar Lista&lt;/button&gt;
+                &lt;div id=&quot;matrices-list&quot; class=&quot;matrices-list&quot;&gt;
+                    &lt;!-- Las matrices se renderizan aquí dinámicamente --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;/static/app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;script src=&quot;/static/app.js&quot;&gt;&lt;/script&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Se trata de una alerta informativa, por lo que no es necesario realizar ningún cambio.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert Types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>Cabecera Content Security Policy (CSP) no configurada</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10038/">Cabecera Content Security Policy (CSP) no configurada</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</a></li>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://www.w3.org/TR/CSP/">https://www.w3.org/TR/CSP/</a></li>
+										<li><a
+											href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a></li>
+										<li><a
+											href="https://web.dev/articles/csp">https://web.dev/articles/csp</a></li>
+										<li><a
+											href="https://caniuse.com/#feat=contentsecuritypolicy">https://caniuse.com/#feat=contentsecuritypolicy</a></li>
+										<li><a
+											href="https://content-security-policy.com/">https://content-security-policy.com/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-1">
+						<h4>Falta de cabecera Anti-Clickjacking</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10020/">Cabecera Anti-Clickjacking</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/1021.html">1021</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-2">
+						<h4>Sub Resource Integrity Attribute Missing</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90003/">Sub Resource Integrity Attribute Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/345.html">345</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-3">
+						<h4>Falta encabezado X-Content-Type-Options</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10021/">Falta encabezado X-Content-Type-Options</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)">https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-4">
+						<h4>Inclusión de archivos fuente JavaScript entre dominios</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10017/">Inclusión de archivos fuente JavaScript entre dominios</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/829.html">829</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							
+						</table>
+					</li>
+					<li
+						id="alert-type-5">
+						<h4>Aplicación Web Moderna</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10109/">Aplicación Web Moderna</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							
+						</table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+</body>
+</html>
+
+
+

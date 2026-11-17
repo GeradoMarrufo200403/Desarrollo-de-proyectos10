@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Matrices - Estilo Excel</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Notificaciones -->
+        <div id="alert-banner" class="alert hidden">
+            <span id="alert-message"></span>
+        </div>
+
+        <div class="grid-layout">
+            <!-- Tarjeta 1: Crear Matriz -->
+            <div class="card">
+                <h2>1. Crear Matriz</h2>
+                <div class="form-group row">
+                    <div>
+                        <label>Filas:</label>
+                        <input type="number" id="rows" min="1" max="10" value="2">
+                    </div>
+                    <div>
+                        <label>Columnas:</label>
+                        <input type="number" id="cols" min="1" max="10" value="2">
+                    </div>
+                    <button class="btn" onclick="generarInputsMatriz()">Configurar</button>
+                </div>
+                <div id="matrix-inputs" class="matrix-inputs"></div>
+                <button class="btn" onclick="crearMatriz()">Guardar Matriz</button>
+            </div>
+
+            <!-- Tarjeta 2: Sumar Matrices -->
+            <div class="card">
+                <h2>2. Sumar Matrices</h2>
+                <div class="form-group">
+                    <label>Matriz 1:</label>
+                    <select id="sum-m1" class="matrix-select"></select>
+                </div>
+                <div class="form-group">
+                    <label>Matriz 2:</label>
+                    <select id="sum-m2" class="matrix-select"></select>
+                </div>
+                <button class="btn" onclick="sumarMatrices()">Sumar</button>
+                <div id="sum-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- Tarjeta 3: Multiplicar Matrices -->
+            <div class="card">
+                <h2>3. Multiplicar Matrices</h2>
+                <div class="form-group">
+                    <label>Matriz 1:</label>
+                    <select id="mul-m1" class="matrix-select"></select>
+                </div>
+                <div class="form-group">
+                    <label>Matriz 2:</label>
+                    <select id="mul-m2" class="matrix-select"></select>
+                </div>
+                <button class="btn" onclick="multiplicarMatrices()">Multiplicar</button>
+                <div id="mul-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- Tarjeta 4: Calcular Determinante (y Transpuesta) -->
+            <div class="card">
+                <h2>4. Calcular Determinante y Transpuesta</h2>
+                <div class="form-group">
+                    <label>Matriz:</label>
+                    <select id="unit-m" class="matrix-select"></select>
+                </div>
+                <div class="row-buttons">
+                    <button class="btn" onclick="calcularDeterminante()">Calcular |A|</button>
+                    <button class="btn" onclick="calcularTranspuesta()">Ver Transpuesta</button>
+                </div>
+                <div id="det-result" class="result-box hidden"></div>
+                <div id="trans-result" class="result-box hidden"></div>
+            </div>
+
+            <!-- Tarjeta 5: Matrices Almacenadas -->
+            <div class="card card-wide">
+                <h2>5. Matrices Almacenadas</h2>
+                <button class="btn" onclick="cargarMatrices()">Refrescar Lista</button>
+                <div id="matrices-list" class="matrices-list">
+                    <!-- Las matrices se renderizan aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
