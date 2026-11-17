@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Matrices</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Calculadora de Matrices</h1>
+            <p>Suma, multiplicación, transpuesta y determinante en tiempo real</p>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Card: Creator -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📐</span>
+                        <span>Crear Matriz</span>
+                    </div>
+                    <div class="tab-switcher">
+                        <button class="tab-btn active" id="tabGrid" data-action="setMode" data-args='["grid"]'>Cuadrícula</button>
+                        <button class="tab-btn" id="tabText" data-action="setMode" data-args='["text"]'>Texto Libre</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="max-width: 140px;">
+                        <label for="matrixName">Nombre</label>
+                        <input type="text" id="matrixName" value="A" maxlength="10" placeholder="Ej: A">
+                    </div>
+                    
+                    <div id="gridDimensions" class="form-group">
+                        <label>Dimensiones (Filas × Cols)</label>
+                        <div class="dimension-selectors">
+                            <span>Filas:</span>
+                            <button type="button" class="stepper-btn" data-action="changeDim" data-args='["rows", -1]'>-</button>
+                            <span id="rowsCount" style="color: #fff; width: 14px; text-align: center;">2</span>
+                            <button type="button" class="stepper-btn" data-action="changeDim" data-args='["rows", 1]'>+</button>
+                            
+                            <span style="margin-left: 8px;">Cols:</span>
+                            <button type="button" class="stepper-btn" data-action="changeDim" data-args='["cols", -1]'>-</button>
+                            <span id="colsCount" style="color: #fff; width: 14px; text-align: center;">2</span>
+                            <button type="button" class="stepper-btn" data-action="changeDim" data-args='["cols", 1]'>+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode 1: Interactive Cell Grid -->
+                <div id="gridEditorView" class="matrix-editor">
+                    <div class="matrix-grid-bracket">
+                        <div id="matrixGrid" class="matrix-grid">
+                            <!-- Cells dynamically rendered -->
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 4px;">
+                        <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" data-action="fillRandom" data-args='[]'>🎲 Aleatorios</button>
+                        <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" data-action="clearGrid" data-args='[]'>🧹 Limpiar</button>
+                    </div>
+                </div>
+
+                <!-- Mode 2: Quick Text Input -->
+                <div id="textEditorView" style="display: none;" class="form-group">
+                    <label for="quickTextInput">Escribe números separados por espacios y saltos de línea:</label>
+                    <textarea id="quickTextInput" class="quick-text-box" placeholder="1 2 3&#10;4 5 6"></textarea>
+                    <p class="helper-tip">💡 Cada fila en una línea nueva. Solo números y espacios (ej: <code>1 2</code> en la primera fila, <code>3 4</code> en la segunda).</p>
+                </div>
+
+                <button type="button" class="btn" data-action="guardarMatriz" data-args='[]'>
+                    <span>💾 Guardar Matriz en Backend</span>
+                </button>
+            </div>
+
+            <!-- Right Card: Saved Matrices List -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📚</span>
+                        <span>Matrices Guardadas</span>
+                        <span id="matricesCount" class="badge">0</span>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" data-action="cargarMatrices" data-args='[]'>
+                        🔄 Refrescar
+                    </button>
+                </div>
+
+                <div id="matrixList" class="matrix-list">
+                    <p class="empty-placeholder" style="text-align: center; margin-top: 40px;">Cargando matrices...</p>
+                </div>
+            </div>
+
+            <!-- Bottom Full Card: Operations -->
+            <div class="card calc-panel">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>⚡</span>
+                        <span>Operaciones Matriciales</span>
+                    </div>
+                </div>
+
+                <!-- Selector de Operación -->
+                <div class="form-group">
+                    <label>Selecciona la Operación</label>
+                    <div class="op-selector-group">
+                        <button type="button" class="op-btn active" id="opSumar" data-action="setOperation" data-args='["sumar"]'>➕ Suma (A + B)</button>
+                        <button type="button" class="op-btn" id="opMultiplicar" data-action="setOperation" data-args='["multiplicar"]'>✖️ Multiplicación (A × B)</button>
+                        <button type="button" class="op-btn" id="opTransponer" data-action="setOperation" data-args='["transponer"]'>🔄 Transpuesta (Aᵀ)</button>
+                        <button type="button" class="op-btn" id="opDeterminante" data-action="setOperation" data-args='["determinante"]'>🎯 Determinante |A|</button>
+                    </div>
+                </div>
+
+                <div class="calc-controls">
+                    <div class="form-group" style="flex: 2; min-width: 200px;">
+                        <label for="selectM1" id="labelM1">Matriz 1 (A)</label>
+                        <select id="selectM1">
+                            <option value="">Seleccionar matriz...</option>
+                        </select>
+                    </div>
+
+                    <div id="opSymbol" style="font-size: 1.5rem; font-weight: 800; color: #a5b4fc; padding-bottom: 10px;">+</div>
+
+                    <div class="form-group" id="containerM2" style="flex: 2; min-width: 200px;">
+                        <label for="selectM2">Matriz 2 (B)</label>
+                        <select id="selectM2">
+                            <option value="">Seleccionar matriz...</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-accent" id="btnEjecutarOp" style="flex: 1; min-width: 180px;" data-action="ejecutarOperacion" data-args='[]'>
+                        <span>Calcular Operación</span>
+                    </button>
+                </div>
+
+                <div class="result-box" id="resultContainer">
+                    <p class="empty-placeholder">Selecciona las matrices y presiona "Calcular Operación" para ver el resultado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast message container -->
+    <div id="toast" class="toast"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

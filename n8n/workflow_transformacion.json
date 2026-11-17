@@ -1,0 +1,59 @@
+{
+  "name": "Transformacion -> Matrices guardadas",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://calculadora:8000/calc/transformacion",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"tx\": 1, \"ty\": 0, \"tz\": 0, \"rx\": 0, \"ry\": 90, \"rz\": 0, \"escala\": 2}",
+        "options": {}
+      },
+      "name": "Calcular transformacion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://calculadora:8000/matrices",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Cookie",
+              "value": "sid=PEGA_AQUI_TU_SID_DE_32_HEX"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ nombre: 'Transformacion', datos: $json.resultado }) }}",
+        "options": {}
+      },
+      "name": "Guardar en matrices",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Calcular transformacion", "type": "main", "index": 0 }]]
+    },
+    "Calcular transformacion": {
+      "main": [[{ "node": "Guardar en matrices", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
