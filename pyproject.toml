@@ -1,0 +1,17 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["venv", ".venv", "**/venv"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "B", "S", "C90"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.per-file-ignores]
+"test_e2e/*" = ["S101"]
+
+[tool.pytest.ini_options]
+testpaths = ["test_e2e"]
+pythonpath = ["Calculadora de matrices"]
