@@ -1,4 +1,4 @@
-def sumar(m1: list, m2: list) -> list:
+﻿def sumar(m1: list, m2: list) -> list:
     if len(m1) != len(m2) or len(m1[0]) != len(m2[0]):
         raise ValueError("Las matrices deben tener la misma dimensión para sumarse.")
     
@@ -26,6 +26,12 @@ def determinante(m: list) -> float:
         raise ValueError("Matriz vacía.")
     if len(m) != len(m[0]):
         raise ValueError("La matriz debe ser cuadrada para calcular el determinante.")
+    
+    # --- MITIGACIÓN SEGURIDAD: Protección contra DoS Algorítmico ---
+    # El algoritmo de Laplace tiene complejidad O(n!). Dimensiones superiores a 8
+    # saturan el uso de CPU provocando una denegación de servicio en el servidor.
+    if len(m) > 8:
+        raise ValueError("Por seguridad y protección contra denegación de servicio (DoS), el tamaño máximo para determinante es 8x8.")
     
     n = len(m)
     if n == 1:

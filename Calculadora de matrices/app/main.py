@@ -1,9 +1,10 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from app.api.routers import matrices, operations
+from app.api.routers.operations import TransformParams, transformacion_3d
 
 app = FastAPI(
     title="Calculadora de Matrices API",
@@ -11,21 +12,64 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# --- MITIGACIÓN OWASP: Middleware de Cabeceras de Seguridad ---
+@app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    
+    # 1. Anti-Clickjacking
+    response.headers["X-Frame-Options"] = "DENY"
+    
+    # 2. Protección contra MIME-Sniffing
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    
+    # 3. Content Security Policy (CSP): Adaptado para permitir Swagger UI en /docs
+    if request.url.path in ("/docs", "/redoc", "/openapi.json"):
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            "img-src 'self' data: https://fastapi.tiangolo.com; "
+            "connect-src 'self' http://localhost:8000; "
+            "frame-ancestors 'none';"
+        )
+    else:
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; "
+            "connect-src 'self' http://localhost:8000; "
+            "frame-ancestors 'none';"
+        )
+    
+    # 4. Ocultar información del servidor para evitar Fingerprinting
+    if "server" in response.headers:
+        del response.headers["server"]
+        
+    return response
+
+# --- MITIGACIÓN OWASP: Restricción estricta de CORS ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allow_headers=["*"],
 )
 
-# La carpeta static ahora está un nivel arriba de app (en la raíz)
 static_path = Path(__file__).parent.parent / "static"
 app.mount("/static", StaticFiles(directory=static_path), name="static")
 
-# Registrar los routers modulares
+# Registrar routers modulares
 app.include_router(matrices.router)
 app.include_router(operations.router)
+
+# --- ALIAS DIRECTO PARA N8N Y VISOR ---
+@app.post("/transformaciones/matriz")
+def endpoint_transformaciones_matriz(params: TransformParams):
+    """Calcula la matriz homogénea 4x4 M = T*Rz*Ry*Rx para n8n y clientes 3D."""
+    return transformacion_3d(params)
 
 INDEX = static_path / "index.html"
 

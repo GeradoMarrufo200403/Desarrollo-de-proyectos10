@@ -1,33 +1,51 @@
-import csv
+﻿import csv
+import math
 from pathlib import Path
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import numpy as np
 from fastapi.responses import HTMLResponse
- 
+
 app = FastAPI(title="3D Model & Matrix Transformation API")
- 
-# Habilitar CORS para permitir que Three.js se conecte sin restricciones
+
+# --- MITIGACIÓN OWASP: Middleware de Cabeceras de Seguridad ---
+@app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "connect-src 'self' ws://localhost:8001 http://localhost:8000 http://localhost:8001; "
+        "frame-ancestors 'none';"
+    )
+    if "server" in response.headers:
+        del response.headers["server"]
+    return response
+
+# --- MITIGACIÓN OWASP: Restricción de CORS ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:8000", "http://localhost:8001"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
- 
+
 MODELS_DIR = Path("modelos_3d")
 CSV_FILE_PATH = Path("modelo_3d.csv")
-# Ahora apuntamos al nuevo endpoint de la calculadora que arma y multiplica las matrices
 CALCULADORA_API_URL = "http://host.docker.internal:8000/operaciones/transformacion-3d"
- 
+
 def cargar_puntos_csv(path: Path) -> list[list[float]]:
     puntos = []
     if not path.exists():
         print(f"Advertencia: No se encontró el archivo {path}")
         return puntos
- 
+
     with open(path, mode="r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         for row in reader:
@@ -36,7 +54,7 @@ def cargar_puntos_csv(path: Path) -> list[list[float]]:
             except (KeyError, ValueError):
                 continue
     return puntos
- 
+
 @app.get("/")
 def read_root():
     return {"status": "online", "message": "API Modelador 3D (Render) activa"}
@@ -69,12 +87,11 @@ def listar_modelos():
             }
         ]
     }
- 
+
 @app.get("/api/modelo-csv")
 def obtener_puntos_modelo(figura: str = "dona"):
     figura_norm = figura.strip().lower()
     
-    # Mapeo de nombres o alternativas comunes
     mapeo = {
         "dona": "dona.csv",
         "toroide": "dona.csv",
@@ -91,7 +108,6 @@ def obtener_puntos_modelo(figura: str = "dona"):
     archivo_objetivo = mapeo.get(figura_norm, f"{figura_norm}.csv")
     path = MODELS_DIR / archivo_objetivo
     
-    # Si no existe en modelos_3d, buscar en la raíz
     if not path.exists():
         if Path(archivo_objetivo).exists():
             path = Path(archivo_objetivo)
@@ -111,29 +127,35 @@ def obtener_puntos_modelo(figura: str = "dona"):
 @app.get("/api/modelo/{figura}")
 def obtener_puntos_por_figura(figura: str):
     return obtener_puntos_modelo(figura)
- 
+
 @app.websocket("/ws/transform")
 async def websocket_transform(websocket: WebSocket):
     await websocket.accept()
     
-    # Cliente HTTP asíncrono para comunicarnos con la API Calculadora de Matrices
     async with httpx.AsyncClient() as client:
         try:
             while True:
                 data = await websocket.receive_json()
-    
-                # Extraemos los datos recibidos del frontend
+                
+                try:
+                    tx = float(data.get("tx", 0.0))
+                    ty = float(data.get("ty", 0.0))
+                    tz = float(data.get("tz", 0.0))
+                    rx = float(data.get("rx", 0.0))
+                    ry = float(data.get("ry", 0.0))
+                    rz = float(data.get("rz", 0.0))
+                except (ValueError, TypeError):
+                    continue
+
+                # --- MITIGACIÓN: Sanitización de entradas numéricas ---
+                if not all(math.isfinite(v) for v in (tx, ty, tz, rx, ry, rz)):
+                    continue
+
                 payload = {
-                    "tx": float(data.get("tx", 0.0)),
-                    "ty": float(data.get("ty", 0.0)),
-                    "tz": float(data.get("tz", 0.0)),
-                    "rx": float(data.get("rx", 0.0)),
-                    "ry": float(data.get("ry", 0.0)),
-                    "rz": float(data.get("rz", 0.0))
+                    "tx": tx, "ty": ty, "tz": tz,
+                    "rx": rx, "ry": ry, "rz": rz
                 }
-    
-                # Hacemos POST a la Calculadora enviando SOLAMENTE los parámetros,
-                # para que la calculadora sea la encargada de armar las matrices y multiplicarlas.
+
                 response = await client.post(
                     CALCULADORA_API_URL, 
                     json=payload,
@@ -142,11 +164,8 @@ async def websocket_transform(websocket: WebSocket):
                 
                 if response.status_code == 200:
                     matriz_resultante = response.json().get("resultado")
-                    
-                    # Transponer (.T) a Column-Major order y aplanar a lista de 16 floats para Three.js
                     M = np.array(matriz_resultante)
                     matriz_flat = M.T.flatten().tolist()
-    
                     await websocket.send_json({"matrix": matriz_flat, "status": "ok"})
                 else:
                     print(f"Error de Calculadora: {response.text}")
@@ -155,7 +174,7 @@ async def websocket_transform(websocket: WebSocket):
             print("Cliente WebSocket desconectado")
         except Exception as e:
             print(f"Error de conexión HTTP: {e}")
- 
+
 @app.get("/view", response_class=HTMLResponse)
 def serve_viewer():
     with open("index.html", "r", encoding="utf-8") as f:

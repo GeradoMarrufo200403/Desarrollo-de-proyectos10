@@ -1,9 +1,11 @@
-const API_URL = "http://localhost:8000";
+﻿const API_URL = "http://localhost:8000";
 
 let matricesCache = [];
 
 function getMatrixName(id) {
-    return String.fromCharCode(64 + id); // 1->A, 2->B, etc.
+    const num = parseInt(id);
+    if (isNaN(num) || num < 1) return "?";
+    return String.fromCharCode(64 + num); // 1->A, 2->B, etc.
 }
 
 function showAlert(message) {
@@ -63,8 +65,8 @@ async function crearMatriz() {
         
         if (res.ok) {
             const data = await res.json();
-            showAlert(`Matriz '${getMatrixName(data.id)}' creada exitosamente.`);
-            cargarMatrices();
+            showAlert(`Matriz '${getMatrixName(data.id)}' [${rows}x${cols}] creada exitosamente.`);
+            await cargarMatrices();
         } else {
             const err = await res.json();
             alert("Error: " + err.detail);
@@ -108,9 +110,12 @@ function renderMatricesList() {
         const div = document.createElement("div");
         div.className = "matrix-display";
         
+        const rows = m.datos.length;
+        const cols = m.datos[0] ? m.datos[0].length : 0;
+        
         const title = document.createElement("div");
         title.className = "matrix-title";
-        title.innerHTML = `ID ${m.id}: ${getMatrixName(m.id)}`;
+        title.innerHTML = `ID ${m.id}: ${getMatrixName(m.id)} <small style="color:#718096">(${rows}x${cols})</small>`;
         
         div.appendChild(title);
         div.innerHTML += renderMatrixHTML(m.datos);
@@ -125,53 +130,92 @@ function updateSelects() {
         const currentVal = select.value;
         select.innerHTML = "";
         matricesCache.forEach(m => {
+            const rows = m.datos.length;
+            const cols = m.datos[0] ? m.datos[0].length : 0;
             const option = document.createElement("option");
             option.value = m.id;
-            option.textContent = `ID ${m.id} (${getMatrixName(m.id)})`;
+            option.textContent = `ID ${m.id} (${getMatrixName(m.id)}) [${rows}x${cols}]`;
             select.appendChild(option);
         });
-        if (currentVal) select.value = currentVal;
+        if (currentVal && Array.from(select.options).some(o => o.value === currentVal)) {
+            select.value = currentVal;
+        }
     });
 }
 
 async function sumarMatrices() {
-    const id1 = document.getElementById("sum-m1").value;
-    const id2 = document.getElementById("sum-m2").value;
+    const id1 = parseInt(document.getElementById("sum-m1").value);
+    const id2 = parseInt(document.getElementById("sum-m2").value);
     if (!id1 || !id2) return;
+
+    const box = document.getElementById("sum-result");
+    box.classList.remove("hidden");
+
+    const m1 = matricesCache.find(m => m.id === id1);
+    const m2 = matricesCache.find(m => m.id === id2);
+
+    if (m1 && m2) {
+        const r1 = m1.datos.length, c1 = m1.datos[0]?.length || 0;
+        const r2 = m2.datos.length, c2 = m2.datos[0]?.length || 0;
+        if (r1 !== r2 || c1 !== c2) {
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: Dimensiones incompatibles para suma.</span><br><br>` +
+                            `<small style="color:#4a5568">La Matriz ${getMatrixName(id1)} es de <strong>${r1}x${c1}</strong> y la Matriz ${getMatrixName(id2)} es de <strong>${r2}x${c2}</strong>.<br>` +
+                            `Para poder sumar dos matrices, ambas deben tener exactamente la misma dimensión.</small>`;
+            return;
+        }
+    }
 
     try {
         const res = await fetch(`${API_URL}/operaciones/sumar?id1=${id1}&id2=${id2}`, { method: "POST" });
         const data = await res.json();
-        const box = document.getElementById("sum-result");
-        box.classList.remove("hidden");
         if (res.ok) {
             box.innerHTML = `<strong>${getMatrixName(id1)} + ${getMatrixName(id2)} =</strong><br><br>` + renderMatrixHTML(data.resultado);
         } else {
-            box.innerHTML = `<span style="color:red">Error: ${data.detail}</span>`;
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: ${data.detail}</span>`;
         }
-    } catch (e) { console.error(e); }
+    } catch (e) {
+        console.error(e);
+        box.innerHTML = `<span style="color:#e53e3e;">Error de conexión</span>`;
+    }
 }
 
 async function multiplicarMatrices() {
-    const id1 = document.getElementById("mul-m1").value;
-    const id2 = document.getElementById("mul-m2").value;
+    const id1 = parseInt(document.getElementById("mul-m1").value);
+    const id2 = parseInt(document.getElementById("mul-m2").value);
     if (!id1 || !id2) return;
+
+    const box = document.getElementById("mul-result");
+    box.classList.remove("hidden");
+
+    const m1 = matricesCache.find(m => m.id === id1);
+    const m2 = matricesCache.find(m => m.id === id2);
+
+    if (m1 && m2) {
+        const c1 = m1.datos[0]?.length || 0;
+        const r2 = m2.datos.length;
+        if (c1 !== r2) {
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: Dimensiones incompatibles para multiplicación.</span><br><br>` +
+                            `<small style="color:#4a5568">Las columnas de ${getMatrixName(id1)} (${c1}) deben ser iguales a las filas de ${getMatrixName(id2)} (${r2}).</small>`;
+            return;
+        }
+    }
 
     try {
         const res = await fetch(`${API_URL}/operaciones/multiplicar?id1=${id1}&id2=${id2}`, { method: "POST" });
         const data = await res.json();
-        const box = document.getElementById("mul-result");
-        box.classList.remove("hidden");
         if (res.ok) {
             box.innerHTML = `<strong>${getMatrixName(id1)} × ${getMatrixName(id2)} =</strong><br><br>` + renderMatrixHTML(data.resultado);
         } else {
-            box.innerHTML = `<span style="color:red">Error: ${data.detail}</span>`;
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: ${data.detail}</span>`;
         }
-    } catch (e) { console.error(e); }
+    } catch (e) {
+        console.error(e);
+        box.innerHTML = `<span style="color:#e53e3e;">Error de conexión</span>`;
+    }
 }
 
 async function calcularDeterminante() {
-    const id = document.getElementById("unit-m").value;
+    const id = parseInt(document.getElementById("unit-m").value);
     if (!id) return;
 
     try {
@@ -183,13 +227,13 @@ async function calcularDeterminante() {
         if (res.ok) {
             box.innerHTML = `<strong>det(${getMatrixName(id)}) = </strong> ${data.determinante}`;
         } else {
-            box.innerHTML = `<span style="color:red">Error: ${data.detail}</span>`;
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: ${data.detail}</span>`;
         }
     } catch (e) { console.error(e); }
 }
 
 async function calcularTranspuesta() {
-    const id = document.getElementById("unit-m").value;
+    const id = parseInt(document.getElementById("unit-m").value);
     if (!id) return;
 
     try {
@@ -201,7 +245,7 @@ async function calcularTranspuesta() {
         if (res.ok) {
             box.innerHTML = `<strong>${getMatrixName(id)}^T =</strong><br><br>` + renderMatrixHTML(data.resultado);
         } else {
-            box.innerHTML = `<span style="color:red">Error: ${data.detail}</span>`;
+            box.innerHTML = `<span style="color:#e53e3e; font-weight:600;">❌ Error: ${data.detail}</span>`;
         }
     } catch (e) { console.error(e); }
 }
