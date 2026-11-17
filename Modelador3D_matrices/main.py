@@ -1,11 +1,10 @@
-﻿import csv
+import csv
 import math
 import os
 from pathlib import Path
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
-import numpy as np
 from fastapi.responses import HTMLResponse
 
 app = FastAPI(title="3D Model & Matrix Transformation API")
@@ -95,7 +94,7 @@ def listar_modelos():
 @app.get("/api/modelo-csv")
 def obtener_puntos_modelo(figura: str = "dona"):
     figura_norm = figura.strip().lower()
-    
+
     mapeo = {
         "dona": "dona.csv",
         "toroide": "dona.csv",
@@ -108,10 +107,10 @@ def obtener_puntos_modelo(figura: str = "dona"):
         "pirámide": "piramide.csv",
         "modelo_3d_piramide": "modelo_3d_piramide.csv"
     }
-    
+
     archivo_objetivo = mapeo.get(figura_norm, f"{figura_norm}.csv")
     path = MODELS_DIR / archivo_objetivo
-    
+
     if not path.exists():
         if Path(archivo_objetivo).exists():
             path = Path(archivo_objetivo)
@@ -119,7 +118,7 @@ def obtener_puntos_modelo(figura: str = "dona"):
             path = MODELS_DIR / "dona.csv"
         elif CSV_FILE_PATH.exists():
             path = CSV_FILE_PATH
-            
+
     puntos = cargar_puntos_csv(path)
     return {
         "figura": figura_norm,
@@ -135,7 +134,7 @@ def obtener_puntos_por_figura(figura: str):
 @app.websocket("/ws/transform")
 async def websocket_transform(websocket: WebSocket):
     await websocket.accept()
-    
+
     async with httpx.AsyncClient() as client:
         try:
             while True:
@@ -193,7 +192,7 @@ async def websocket_transform(websocket: WebSocket):
                     else:
                         await websocket.send_json({"status": "error", "detail": "no se pudo guardar la figura"})
                     continue
-                
+
                 try:
                     tx = float(data.get("tx", 0.0))
                     ty = float(data.get("ty", 0.0))
@@ -214,19 +213,22 @@ async def websocket_transform(websocket: WebSocket):
                 }
 
                 response = await client.post(
-                    CALCULADORA_API_URL, 
+                    CALCULADORA_API_URL,
                     json=payload,
                     timeout=5.0
                 )
-                
+
                 if response.status_code == 200:
                     matriz_resultante = response.json().get("resultado")
-                    M = np.array(matriz_resultante)
-                    matriz_flat = M.T.flatten().tolist()
+                    matriz_flat = [
+                        float(matriz_resultante[r][c])
+                        for c in range(len(matriz_resultante[0]))
+                        for r in range(len(matriz_resultante))
+                    ]
                     await websocket.send_json({"matrix": matriz_flat, "status": "ok"})
                 else:
                     print(f"Error de Calculadora: {response.text}")
-                    
+
         except WebSocketDisconnect:
             print("Cliente WebSocket desconectado")
         except Exception as e:

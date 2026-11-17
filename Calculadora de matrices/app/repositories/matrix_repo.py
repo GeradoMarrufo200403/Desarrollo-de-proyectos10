@@ -1,5 +1,3 @@
-from app.models.models import MatrixCreate
-
 class MatrixRepository:
     def __init__(self):
         self.db = {}
@@ -29,6 +27,7 @@ class MatrixRepository:
             return True
         return False
 
+
 # Instancia global (singleton para esta prueba en memoria)
 matrix_db = MatrixRepository()
 
@@ -39,7 +38,7 @@ class FiguraMorphRepository:
         self.counter = 1
 
     def guardar(self, data: dict) -> dict:
-        nombre = data["nombre"]
+        nombre = data["nombre"].strip()
         for fig in self.figuras.values():
             if fig["nombre"] == nombre:
                 fig["t"] = data["t"]
@@ -59,6 +58,14 @@ class FiguraMorphRepository:
     def listar(self) -> list:
         return list(self.figuras.values())
 
+    def obtener(self, id: int) -> dict:
+        return self.figuras.get(id)
+
+    def eliminar(self, id: int) -> bool:
+        if id in self.figuras:
+            del self.figuras[id]
+            return True
+        return False
+
 
 figura_db = FiguraMorphRepository()
-

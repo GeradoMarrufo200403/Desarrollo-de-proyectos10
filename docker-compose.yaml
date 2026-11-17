@@ -27,3 +27,4 @@ services:
     depends_on:
       calculadora:
         condition: service_healthy
+

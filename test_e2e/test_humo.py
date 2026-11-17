@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
- 
+
 VISOR = "http://localhost:8001/view"
 
 def test_visor_se_conecta(page: Page):
