@@ -33,11 +33,13 @@ def test_morph_t1_coincide_con_taza():
 
 
 def test_endpoint_calc_morph_devuelve_vertices():
-    r = client.post("/calc/morph", json={"t": 0.5, "resolucion": 12})
+    r = client.post("/operaciones/morph-3d", json={"t": 0.5, "resolucion": 12})
     assert r.status_code == 200
     body = r.json()
     assert body["total_puntos"] == 144
     assert len(body["vertices"]) == 144
+    assert "resumen_markdown" in body
+    assert "Transición (50.0%)" in body["resumen_markdown"]
 
 
 def test_guardar_y_listar_figura_morph():
@@ -45,6 +47,15 @@ def test_guardar_y_listar_figura_morph():
     assert r.status_code == 200
     data = r.json()
     assert data["nombre"] == "Taza Glassmorphism"
+    fig_id = data["id"]
 
+    # Consultar por ID y en la lista
+    assert client.get(f"/figuras/{fig_id}").status_code == 200
     lista = client.get("/figuras").json()
     assert any(f["nombre"] == "Taza Glassmorphism" for f in lista)
+
+    # Eliminar figura por ID
+    assert client.delete(f"/figuras/{fig_id}").status_code == 204
+    assert client.get(f"/figuras/{fig_id}").status_code == 404
+
+

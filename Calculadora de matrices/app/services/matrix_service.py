@@ -1,16 +1,16 @@
-﻿import math
+import math
 
 
 def sumar(m1: list, m2: list) -> list:
     if len(m1) != len(m2) or len(m1[0]) != len(m2[0]):
         raise ValueError("Las matrices deben tener la misma dimensión para sumarse.")
-    
+
     return [[m1[i][j] + m2[i][j] for j in range(len(m1[0]))] for i in range(len(m1))]
 
 def multiplicar(m1: list, m2: list) -> list:
     if len(m1[0]) != len(m2):
         raise ValueError("El número de columnas de la matriz 1 debe ser igual al número de filas de la matriz 2.")
-    
+
     result = [[0.0 for _ in range(len(m2[0]))] for _ in range(len(m1))]
     for i in range(len(m1)):
         for j in range(len(m2[0])):
@@ -29,19 +29,19 @@ def determinante(m: list) -> float:
         raise ValueError("Matriz vacía.")
     if len(m) != len(m[0]):
         raise ValueError("La matriz debe ser cuadrada para calcular el determinante.")
-    
+
     # --- MITIGACIÓN SEGURIDAD: Protección contra DoS Algorítmico ---
     # El algoritmo de Laplace tiene complejidad O(n!). Dimensiones superiores a 8
     # saturan el uso de CPU provocando una denegación de servicio en el servidor.
     if len(m) > 8:
         raise ValueError("Por seguridad y protección contra denegación de servicio (DoS), el tamaño máximo para determinante es 8x8.")
-    
+
     n = len(m)
     if n == 1:
         return float(m[0][0])
     if n == 2:
         return float(m[0][0]*m[1][1] - m[0][1]*m[1][0])
-    
+
     det = 0
     for c in range(n):
         det += ((-1)**c) * m[0][c] * determinante(_get_minor(m, 0, c))
@@ -97,6 +97,10 @@ def vertice_taza(u: float, v: float) -> list[float]:
 
 def calcular_morph(t: float, resolucion: int = 50) -> list[list[float]]:
     """Interpola linealmente P(u,v,t) = (1 - t)*D(u,v) + t*T(u,v)."""
+    if not math.isfinite(t) or not (0.0 <= t <= 1.0):
+        raise ValueError("El parámetro t debe ser finito y estar entre 0.0 y 1.0.")
+    if not isinstance(resolucion, int) or not (4 <= resolucion <= 100):
+        raise ValueError("La resolución debe ser un entero entre 4 y 100.")
     paso = (2 * math.pi) / resolucion
     vertices = []
     for i in range(resolucion):

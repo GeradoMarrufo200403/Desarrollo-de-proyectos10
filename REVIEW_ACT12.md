@@ -1,8 +1,9 @@
 # Bitácora de Code Review — Actividad #12 (`REVIEW_ACT12.md`)
 
+**Autor de la Revisión:** Gerardo Marrufo (`@GeradoMarrufo200403`)  
 **Materia:** Implementación e Integración de IA y Automatización de Procesos (Unidad III — Calidad profesional, CI/CD, documentación y auditoría)  
 **Profesor:** Dr. Jorge Javier Pedrozo Romero  
-**Pull Request Revisado:** [`Ninacruz25/calculadora#2` — `feat: morph dona -> taza (endpoint, figuras guardadas, relevo al visor)`](https://github.com/Ninacruz25/calculadora/pull/2)  
+**Pull Request Revisado (Equipo Evaluado):** [`Ninacruz25/calculadora#2` — `feat: morph dona -> taza (endpoint, figuras guardadas, relevo al visor)`](https://github.com/Ninacruz25/calculadora/pull/2)  
 **Rama del PR revisado:** `feat/morph-dona-taza` (`43bee30`) $\rightarrow$ `main` (`4f67187`)  
 **Rama con pruebas en rojo (Entregable #2):** [`review-act12`](https://github.com/GeradoMarrufo200403/Desarrollo-de-proyectos10/tree/review-act12) (`tests_unitarias/test_review_act12_defectos.py`)  
 **Decisión Final de la Revisión:** 🚫 **`Request changes` (Solicitar cambios)**

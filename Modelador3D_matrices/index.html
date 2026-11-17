@@ -354,10 +354,10 @@
             <div class="control-section-title">Morph Topológico (Dona → Taza)</div>
             <div class="slider-wrapper">
                 <div class="slider-header">
-                    <span id="figura-etiqueta">Dona</span>
-                    <span class="slider-value" id="val-morph-t">0%</span>
+                    <span id="figura-etiqueta">Taza</span>
+                    <span class="slider-value" id="val-morph-t">100%</span>
                 </div>
-                <input type="range" id="morph-t" min="0" max="1" step="0.02" value="0">
+                <input type="range" id="morph-t" min="0" max="1" step="0.02" value="1">
             </div>
             <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
                 <input type="text" id="figura-nombre" maxlength="60" placeholder="Nombre de la figura..."
@@ -437,21 +437,29 @@
             dona: { name: 'Dona (Toroide)', icon: '🍩', color: 0x00ffaa, hex: '#00ffaa', size: 0.15 },
             esfera: { name: 'Esfera', icon: '🔮', color: 0x00d4ff, hex: '#00d4ff', size: 0.14 },
             piramide: { name: 'Pirámide', icon: '🔺', color: 0xffb700, hex: '#ffb700', size: 0.16 },
-            morph: { name: 'Morph Dona → Taza', icon: '☕', color: 0x00ffaa, hex: '#00ffaa', size: 0.15 }
+            morph: { name: 'Morph Dona → Taza', icon: '☕', color: 0xff3399, hex: '#ff3399', size: 0.16 }
         };
         let currentFigure = 'dona';
         let morphSavedName = null;
+        let morphInFlight = false;
+        let pendingMorphT = null;
+        let transformInFlight = false;
 
         function requestMorphVertices(tVal) {
             if (!ws || ws.readyState !== WebSocket.OPEN) return;
-            ws.send(JSON.stringify({ morph: { t: parseFloat(tVal), resolucion: 60 } }));
+            if (morphInFlight) {
+                pendingMorphT = parseFloat(tVal);
+                return;
+            }
+            morphInFlight = true;
+            ws.send(JSON.stringify({ morph: { t: parseFloat(tVal), resolucion: 75 } }));
         }
 
         async function fetchModelData(figura = 'dona') {
             const morphPanel = document.getElementById('morph-panel');
             if (figura === 'morph') {
                 if (morphPanel) morphPanel.style.display = 'flex';
-                const tVal = parseFloat(document.getElementById('morph-t').value || '0');
+                const tVal = parseFloat(document.getElementById('morph-t').value || '1');
                 requestMorphVertices(tVal);
                 return;
             }
@@ -558,20 +566,38 @@
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 if (data.morph && data.morph.vertices) {
-                    createPointsMesh(data.morph.vertices, 'morph');
-                    const pct = Math.round(data.morph.t * 100);
-                    document.getElementById('val-morph-t').innerText = `${pct}%`;
-                    const etiqueta = document.getElementById('figura-etiqueta');
-                    if (morphSavedName) {
-                        etiqueta.innerText = morphSavedName;
-                    } else if (data.morph.t === 0) {
-                        etiqueta.innerText = 'Dona';
-                    } else if (data.morph.t === 1) {
-                        etiqueta.innerText = 'Taza';
-                    } else {
-                        etiqueta.innerText = `Dona → Taza (${pct}%)`;
+                    morphInFlight = false;
+                    if (currentFigure === 'morph') {
+                        createPointsMesh(data.morph.vertices, 'morph');
+                        // Interpolar color entre verde Dona (#00ffaa) y rosa/magenta Taza (#ff3399)
+                        if (pointsMesh && pointsMesh.material) {
+                            const tColor = data.morph.t;
+                            pointsMesh.material.color.setRGB(
+                                tColor * 1.0,
+                                (1.0 - tColor) * 1.0 + tColor * 0.2,
+                                (1.0 - tColor) * 0.67 + tColor * 0.6
+                            );
+                        }
+                        const pct = Math.round(data.morph.t * 100);
+                        document.getElementById('val-morph-t').innerText = `${pct}%`;
+                        const etiqueta = document.getElementById('figura-etiqueta');
+                        if (morphSavedName) {
+                            etiqueta.innerText = morphSavedName;
+                        } else if (data.morph.t === 0) {
+                            etiqueta.innerText = 'Dona';
+                        } else if (data.morph.t === 1) {
+                            etiqueta.innerText = 'Taza';
+                        } else {
+                            etiqueta.innerText = `Dona → Taza (${pct}%)`;
+                        }
+                        document.getElementById('model-status').innerText = `☕ ${etiqueta.innerText}: ${data.morph.vertices.length.toLocaleString()} vértices`;
+                        document.getElementById('model-status').style.color = '#ff3399';
                     }
-                    document.getElementById('model-status').innerText = `☕ ${etiqueta.innerText}: ${data.morph.vertices.length.toLocaleString()} vértices`;
+                    if (pendingMorphT !== null) {
+                        const nextT = pendingMorphT;
+                        pendingMorphT = null;
+                        requestMorphVertices(nextT);
+                    }
                     return;
                 }
                 if (data.guardada && data.guardada.nombre) {
@@ -580,6 +606,7 @@
                     document.getElementById('model-status').innerText = `☕ Guardada: ${morphSavedName}`;
                     return;
                 }
+                transformInFlight = false;
                 if (data.matrix) {
                     // Convert Array to Matrix4 and apply it to the group
                     const m = new THREE.Matrix4();
@@ -606,12 +633,13 @@
         
         function sendTransformData() {
             if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            if (transformInFlight) return;
 
             const payload = {};
             sliders.forEach(id => {
                 payload[id] = parseFloat(document.getElementById(id).value);
             });
-            
+            transformInFlight = true;
             ws.send(JSON.stringify(payload));
         }
 
